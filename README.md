@@ -4,6 +4,8 @@ Jeu de déduction logique jouable dans un navigateur. À partir d’indices dont
 
 ## Jouer
 
+Le jeu est disponible sur <https://vfarcy.github.io/LAlchimie/>.
+
 Ouvrez `index.html` dans un navigateur récent. Aucune installation ni compilation n’est nécessaire.
 
 Pour servir le fichier localement, lancez par exemple `python -m http.server 8000` à la racine du projet, puis ouvrez <http://localhost:8000>.
@@ -29,6 +31,10 @@ La graine n’est pas un mécanisme de sécurité : le jeu et son secret sont ca
 - HTML, styles et JavaScript sont réunis dans `index.html`.
 - Tailwind CSS et les polices Cormorant Garamond / Plus Jakarta Sans sont chargés depuis des CDN ; une connexion Internet est donc nécessaire pour obtenir le style complet.
 - L’état de la partie, les annotations et les notes libres ne sont pas sauvegardés : recharger la page démarre une nouvelle partie.
+
+## Déploiement
+
+GitHub Pages publie automatiquement la racine de la branche `main`. Chaque modification poussée sur cette branche déclenche une nouvelle publication, sans étape de compilation.
 
 ## Audit et vérification
 
