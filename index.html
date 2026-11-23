@@ -1257,22 +1257,24 @@
                 <li>
                   <strong class="text-cream"> Le Souffle </strong> compte les
                   pistes compatibles avec les r&eacute;ponses du Journal, sans
-                  appliquer les Serments d&rsquo;Or. Avant tout sondage, il
-                  sugg&egrave;re aussi un indice.
+                  appliquer les Serments d&rsquo;Or, et explique quelles
+                  promesses restent possibles pour une carte sond&eacute;e.
                 </li>
                 <li>
                   <strong class="text-cream"> La Piste </strong> sugg&egrave;re
-                  une carte &agrave; examiner et peut indiquer sa r&eacute;ponse
-                  pour votre proposition actuelle.
+                  une proposition et une carte &agrave; sonder. Elle explique
+                  comment les deux r&eacute;ponses possibles partageraient les
+                  pistes, sans pr&eacute;dire la r&eacute;ponse secr&egrave;te.
                 </li>
                 <li>
                   <strong class="text-cream"> La Cl&eacute; </strong> indique
-                  une nuance absente de la solution, que vous pouvez voiler sur
-                  la Carte du Tendre.
+                  une nuance &agrave; voiler si les r&eacute;ponses permettent
+                  d&eacute;j&agrave; de l&rsquo;&eacute;carter.
                 </li>
               </ul>
               <p>
-                Ces aides utilisent le secret de l&rsquo;&eacute;nigme et
+                Ces aides utilisent les promesses affich&eacute;es et les
+                r&eacute;ponses du Journal, sans consulter le secret, et
                 n&rsquo;ajoutent pas de soupir. Elles ne r&eacute;solvent pas
                 n&eacute;cessairement toute la partie.
               </p>
@@ -1767,7 +1769,9 @@
             >
               &mdash;
             </div>
-            <div class="text-[11px] text-dusty">Convergence optimale</div>
+            <div class="text-[11px] text-dusty">
+              Moyenne des parties r&eacute;solues
+            </div>
           </div>
         </div>
         <!-- Détails des 3 batteries de tests -->
@@ -2858,60 +2862,93 @@
         // -------------------------------------------------------------------------
         // 11. BANC D'ÉPREUVE — SUITE DE TESTS AUTOMATISÉS & SOLVEUR LOGIQUE
         // -------------------------------------------------------------------------
-        function simulateOptimalSolver(puzzle) {
-          // Simulation d'un stratège utilisant l'élimination croisée et la non-redondance
-          let candidatePool = [...ALL_CODES];
-          let nights = 0;
-          let sighs = 0;
-          const testedPairs = new Set();
-          while (candidatePool.length > 1 && nights < 10) {
-            nights += 1;
-            // Choisir la combinaison qui discrimine au mieux les candidats restants
-            let bestProposal = candidatePool[0];
-            let bestScore = -1;
-            for (const prop of ALL_CODES) {
-              let splitScore = 0;
-              for (const v of puzzle.verifiers) {
-                const key = `${prop.join("")}-${v.letter}`;
-                if (testedPairs.has(key)) continue;
-                const trueCount = candidatePool.filter((c) =>
-                  v.activeLaw.test(c),
-                ).length;
-                const falseCount = candidatePool.length - trueCount;
-                splitScore += Math.min(trueCount, falseCount);
+        function simulateLogicalSolver(verifiers, queryOracle) {
+          // Chaque candidat détermine une loi hypothétique par famille.
+          const predictions = verifiers.map((verif) => {
+            const candidateLaws = ALL_CODES.map((code) => {
+              const laws = verif.family.laws.filter((law) => law.test(code));
+              if (laws.length !== 1) {
+                throw new Error(
+                  `Partition invalide pour l'indice ${verif.letter}`,
+                );
               }
-              if (splitScore > bestScore) {
-                bestScore = splitScore;
-                bestProposal = prop;
+              return laws[0];
+            });
+            return ALL_CODES.map((proposal) =>
+              Uint8Array.from(candidateLaws, (law) =>
+                Number(law.test(proposal)),
+              ),
+            );
+          });
+          let candidates = ALL_CODES.map((_, index) => index);
+          const history = [];
+          let sighs = 0;
+
+          function splitScore(proposalIndex, verifierIndex) {
+            const outcomes = predictions[verifierIndex][proposalIndex];
+            const passed = candidates.reduce(
+              (sum, index) => sum + outcomes[index],
+              0,
+            );
+            return Math.min(passed, candidates.length - passed);
+          }
+
+          while (candidates.length > 1) {
+            let bestProposal = -1;
+            let bestScore = 0;
+            for (
+              let proposalIndex = 0;
+              proposalIndex < ALL_CODES.length;
+              proposalIndex++
+            ) {
+              const scores = verifiers
+                .map((_, index) => splitScore(proposalIndex, index))
+                .sort((a, b) => b - a);
+              const score = scores
+                .slice(0, 3)
+                .reduce((sum, value) => sum + value, 0);
+              if (score > bestScore) {
+                bestScore = score;
+                bestProposal = proposalIndex;
               }
             }
-            // Tester jusqu'à 3 vérificateurs pertinents pour cette proposition
-            let testsThisNight = 0;
-            for (const v of puzzle.verifiers) {
-              if (testsThisNight >= 3 || candidatePool.length <= 1) break;
-              const key = `${bestProposal.join("")}-${v.letter}`;
-              if (testedPairs.has(key)) continue;
-              const trueCount = candidatePool.filter((c) =>
-                v.activeLaw.test(c),
-              ).length;
-              if (trueCount === 0 || trueCount === candidatePool.length)
-                continue;
-              testedPairs.add(key);
-              testsThisNight += 1;
+            if (bestProposal === -1) break;
+
+            const entry = { code: ALL_CODES[bestProposal], results: [] };
+            const tested = new Set();
+            while (entry.results.length < 3 && candidates.length > 1) {
+              let bestVerifier = -1;
+              let bestSplit = 0;
+              verifiers.forEach((verif, index) => {
+                if (tested.has(verif.letter)) return;
+                const score = splitScore(bestProposal, index);
+                if (score > bestSplit) {
+                  bestSplit = score;
+                  bestVerifier = index;
+                }
+              });
+              if (bestVerifier === -1) break;
+              const verif = verifiers[bestVerifier];
+              const passed = queryOracle(verif.letter, entry.code);
+              if (typeof passed !== "boolean") {
+                throw new Error(`Réponse invalide pour l'indice ${verif.letter}`);
+              }
+              tested.add(verif.letter);
+              entry.results.push({ letter: verif.letter, passed });
               sighs += 1;
-              const actualOutcome = v.activeLaw.test(puzzle.secret);
-              candidatePool = candidatePool.filter(
-                (c) => v.activeLaw.test(c) === actualOutcome,
+              const outcomes = predictions[bestVerifier][bestProposal];
+              candidates = candidates.filter(
+                (index) => Boolean(outcomes[index]) === passed,
               );
             }
-            if (testsThisNight === 0) break;
+            history.push(entry);
           }
-          const solved =
-            candidatePool.length === 1 &&
-            candidatePool[0][0] === puzzle.secret[0] &&
-            candidatePool[0][1] === puzzle.secret[1] &&
-            candidatePool[0][2] === puzzle.secret[2];
-          return { solved, nights, sighs, remaining: candidatePool.length };
+          return {
+            candidates: candidates.map((index) => ALL_CODES[index]),
+            history,
+            nights: history.length,
+            sighs,
+          };
         }
         function runBenchmarkSuite() {
           const logs = [];
@@ -3044,33 +3081,105 @@
           let solverWins = 0;
           let totalSolverNights = 0;
           let totalSolverSighs = 0;
+          const solverFailures = [];
           const solverSampleCount = 60;
           for (let i = 0; i < solverSampleCount; i++) {
             const diff = intensities[i % 3];
             const p = generatePuzzle(`SOLV${i}`, diff);
-            const sim = simulateOptimalSolver(p);
+            const verifiers = p.verifiers.map(({ letter, family }) => ({
+              letter,
+              family,
+            }));
+            const sim = simulateLogicalSolver(verifiers, (letter, proposal) => {
+              const verif = p.verifiers.find((v) => v.letter === letter);
+              return verif.activeLaw.test(proposal);
+            });
+            const solved =
+              sim.candidates.length === 1 &&
+              sim.candidates[0].every(
+                (value, index) => value === p.secret[index],
+              );
             totalChecks += 1;
-            if (sim.solved) {
+            if (solved) {
               solverWins += 1;
               passedChecks += 1;
               totalSolverNights += sim.nights;
               totalSolverSighs += sim.sighs;
+            } else {
+              solverFailures.push(
+                `SOLV${i} : ${sim.candidates.length} pistes restantes`,
+              );
             }
           }
-          const avgNights = (totalSolverNights / solverSampleCount).toFixed(2);
-          const avgSighs = (totalSolverSighs / solverSampleCount).toFixed(2);
+          const avgNights = solverWins
+            ? (totalSolverNights / solverWins).toFixed(2)
+            : "—";
+          const avgSighs = solverWins
+            ? (totalSolverSighs / solverWins).toFixed(2)
+            : "—";
           logs.push({
-            title: "Test 3 — Solveur logique pur sur 60 nuits aléatoires",
+            title: "Test 3 — Solveur logique sur 60 énigmes",
             ok: solverWins === solverSampleCount,
-            detail: `${solverWins}/${solverSampleCount} victoires sans hasard. Convergence moyenne en ${avgNights} nuits (${avgSighs} soupirs).`,
+            detail: `${solverWins}/${solverSampleCount} énigmes résolues à partir des réponses. Moyenne des réussites : ${avgNights} nuits (${avgSighs} soupirs).${solverFailures.length ? ` Échecs : ${solverFailures.slice(0, 3).join(" | ")}` : ""}`,
+          });
+          const fixtureVerifiers = [0, 1, 2].map((dimension) => ({
+            letter: "ABC"[dimension],
+            family: {
+              laws: [1, 2, 3, 4, 5].map((value) => ({
+                test: (code) => code[dimension] === value,
+              })),
+            },
+          }));
+          const oracleCalls = [];
+          const fixture = simulateLogicalSolver(
+            fixtureVerifiers,
+            (letter, code) => {
+              const verif = fixtureVerifiers.find((v) => v.letter === letter);
+              const passed = verif.family.laws[4].test(code);
+              oracleCalls.push({ letter, code: [...code], passed });
+              return passed;
+            },
+          );
+          const recordedCalls = fixture.history.flatMap((entry) =>
+            entry.results.map((result) => ({ ...result, code: entry.code })),
+          );
+          const fixtureValid =
+            fixture.candidates.length === 1 &&
+            fixture.candidates[0].join("-") === "5-5-5" &&
+            oracleCalls.some((call) => !call.passed) &&
+            fixture.sighs === oracleCalls.length &&
+            fixture.history.every(
+              (entry) =>
+                entry.results.length > 0 &&
+                entry.results.length <= 3 &&
+                new Set(entry.results.map((result) => result.letter)).size ===
+                  entry.results.length,
+            ) &&
+            recordedCalls.every(
+              (result, index) =>
+                result.letter === oracleCalls[index].letter &&
+                result.passed === oracleCalls[index].passed &&
+                result.code.join("-") === oracleCalls[index].code.join("-"),
+            ) &&
+            getCompatibleCodes(fixtureVerifiers, fixture.history)
+              .map((code) => code.join("-"))
+              .join(",") === "5-5-5";
+          totalChecks += 1;
+          if (fixtureValid) passedChecks += 1;
+          logs.push({
+            title: "Test 4 — Simulation des réponses de l’Oracle",
+            ok: fixtureValid,
+            detail: fixtureValid
+              ? "Réponses rubis, propositions sondées et limite de trois indices vérifiées."
+              : "La simulation ne respecte pas les réponses ou les règles d’une nuit.",
           });
           const hintVerifiers = [
             {
               letter: "A",
               family: {
                 laws: [
-                  { test: (code) => code[0] % 2 === 0 },
-                  { test: (code) => code[0] % 2 !== 0 },
+                  { label: "Atmosphère paire", test: (code) => code[0] % 2 === 0 },
+                  { label: "Atmosphère impaire", test: (code) => code[0] % 2 !== 0 },
                 ],
               },
             },
@@ -3078,8 +3187,8 @@
               letter: "B",
               family: {
                 laws: [
-                  { test: (code) => code[1] <= 2 },
-                  { test: (code) => code[1] > 2 },
+                  { label: "Élan inférieur à 3", test: (code) => code[1] <= 2 },
+                  { label: "Élan supérieur à 2", test: (code) => code[1] > 2 },
                 ],
               },
             },
@@ -3139,12 +3248,101 @@
             }
           }
           logs.push({
-            title: "Test 4 — Pistes compatibles avec les réponses",
+            title: "Test 5 — Pistes compatibles avec les réponses",
             ok: hintFailures.length === 0,
             detail:
               hintFailures.length === 0
                 ? `${hintCases.length} scénarios vérifiés, dont les réponses rubis et les sondages répétés.`
                 : hintFailures.join(" | "),
+          });
+          const hintNotes = {
+            blue: [0, 0, 0, 0, 0],
+            yellow: [0, 0, 0, 0, 0],
+            purple: [0, 0, 0, 0, 0],
+          };
+          const guardedVerifiers = hintVerifiers.map(({ letter, family }) => ({
+            letter,
+            family: { ...family, title: `Carte ${letter}` },
+            get activeLaw() {
+              throw new Error("Un Murmure consulte une loi secrète");
+            },
+          }));
+          const proposal = { blue: 3, yellow: 3, purple: 3 };
+          const initialHints = computeProgressiveHints(
+            guardedVerifiers, [], proposal, {}, hintNotes, false
+          );
+          const deducedHints = computeProgressiveHints(
+            guardedVerifiers,
+            [oddRejected, evenAccepted],
+            proposal,
+            { A: true },
+            hintNotes,
+            false,
+          );
+          const unavailableHints = computeProgressiveHints(
+            guardedVerifiers,
+            [],
+            proposal,
+            { A: true, B: false },
+            hintNotes,
+            false,
+          );
+          const inconsistentHints = computeProgressiveHints(
+            guardedVerifiers,
+            [
+              oddRejected,
+              { code: [1, 1, 1], results: [{ letter: "A", passed: true }] },
+            ],
+            proposal,
+            {},
+            hintNotes,
+            false,
+          );
+          const logicalHintChecks = [
+            {
+              name: "aucune déduction prématurée",
+              ok:
+                initialHints[0].body.includes("125 combinaison(s)") &&
+                initialHints[2].body.includes("ne permettent pas encore"),
+            },
+            {
+              name: "sondage expliqué",
+              ok:
+                /(?:50 piste\(s\), et une réponse rubis 75|75 piste\(s\), et une réponse rubis 50)/.test(
+                  initialHints[1].body,
+                ) &&
+                initialHints[1].body.includes("réponse réelle reste à découvrir"),
+            },
+            {
+              name: "déduction après rubis et émeraude",
+              ok:
+                deducedHints[0].body.includes("50 combinaison(s)") &&
+                deducedHints[0].body.includes("Atmosphère paire") &&
+                deducedHints[2].body.includes("1. « Café tamisé »"),
+            },
+            {
+              name: "sondage reporté à la nuit suivante",
+              ok: unavailableHints[1].body.includes("nuit suivante"),
+            },
+            {
+              name: "historique contradictoire",
+              ok: inconsistentHints.every((hint) =>
+                hint.body.includes("incohérentes"),
+              ),
+            },
+          ];
+          const logicalHintFailures = logicalHintChecks
+            .filter((check) => !check.ok)
+            .map((check) => check.name);
+          totalChecks += logicalHintChecks.length;
+          passedChecks += logicalHintChecks.length - logicalHintFailures.length;
+          logs.push({
+            title: "Test 6 — Murmures déduits sans secret",
+            ok: logicalHintFailures.length === 0,
+            detail:
+              logicalHintFailures.length === 0
+                ? `${logicalHintChecks.length} scénarios vérifiés, sans accès aux lois secrètes.`
+                : logicalHintFailures.join(" | "),
           });
           // Mise à jour des compteurs de la modale
           const rate = ((passedChecks / totalChecks) * 100).toFixed(1);
@@ -3158,7 +3356,7 @@
           document.getElementById("benchMinRedundancy").textContent =
             `Min ${minAblation} / Moy ${(ablationSum / ablationCount).toFixed(1)}`;
           document.getElementById("benchSolverAvg").textContent =
-            `${avgNights} nuits`;
+            solverWins ? `${avgNights} nuits` : "—";
           const reportEl = document.getElementById("benchReportContainer");
           reportEl.innerHTML = logs
             .map(
@@ -3192,127 +3390,173 @@
         // -------------------------------------------------------------------------
         // 11B. MOTEUR DES INDICES PROGRESSIFS (MURMURE DE L'INTUITION)
         // -------------------------------------------------------------------------
-        function getCompatibleCodes(verifiers, history) {
-          const possibleLaws = verifiers.map((verif) =>
-            verif.family.laws.filter((law) =>
-              history.every((entry) =>
-                entry.results.every(
-                  (result) =>
-                    result.letter !== verif.letter ||
-                    law.test(entry.code) === result.passed,
-                ),
+        function getPossibleLaws(verif, history) {
+          return verif.family.laws.filter((law) =>
+            history.every((entry) =>
+              entry.results.every(
+                (result) =>
+                  result.letter !== verif.letter ||
+                  law.test(entry.code) === result.passed,
               ),
             ),
+          );
+        }
+        function getCompatibleCodes(verifiers, history) {
+          const possibleLaws = verifiers.map((verif) =>
+            getPossibleLaws(verif, history),
           );
           return ALL_CODES.filter((code) =>
             possibleLaws.every((laws) => laws.some((law) => law.test(code))),
           );
         }
-        function computeProgressiveHints() {
-          const puzzle = state.puzzle;
-          const secret = puzzle.secret;
-          // 1. Calculer l'ensemble des combinaisons encore compatibles avec l'historique sondé
-          const observedObservations = [];
-          state.history.forEach((entry) => {
-            entry.results.forEach((res) => {
-              const verif = puzzle.verifiers.find(
-                (v) => v.letter === res.letter,
-              );
-              if (verif) {
-                observedObservations.push({
-                  verif,
-                  passed: res.passed,
-                });
-              }
-            });
-          });
-          const logicallyCompatible = getCompatibleCodes(
-            puzzle.verifiers,
-            state.history,
+        function computeProgressiveHints(
+          verifiers,
+          history,
+          proposal,
+          tested,
+          notes,
+          gameOver,
+        ) {
+          const candidates = getCompatibleCodes(verifiers, history);
+          const count = history.reduce(
+            (total, entry) => total + entry.results.length,
+            0,
           );
-          // Identifier les indices jamais encore sondés
-          const testedLetters = new Set(
-            observedObservations.map((o) => o.verif.letter),
-          );
-          const untestedVerifiers = puzzle.verifiers.filter(
-            (v) => !testedLetters.has(v.letter),
-          );
-          // Évaluer le pouvoir filtrant de chaque indice sur les candidats restants
-          let bestVerifier = untestedVerifiers[0] || puzzle.verifiers[0];
-          let bestSplitMin = -1;
-          puzzle.verifiers.forEach((v) => {
-            const trueCount = logicallyCompatible.filter((c) =>
-              v.activeLaw.test(c),
-            ).length;
-            const falseCount = logicallyCompatible.length - trueCount;
-            const splitScore =
-              Math.min(trueCount, falseCount) +
-              (testedLetters.has(v.letter) ? 0 : 100);
-            if (splitScore > bestSplitMin) {
-              bestSplitMin = splitScore;
-              bestVerifier = v;
-            }
-          });
-          // 2. Murmure I : Le Souffle (état de l'espace de recherche + portée de la loi la plus filtrante)
-          const bestLawMatches = ALL_CODES.filter((c) =>
-            bestVerifier.activeLaw.test(c),
-          ).length;
+          const observed = verifiers
+            .map((verif) => ({
+              verif,
+              laws: getPossibleLaws(verif, history),
+              entry: history.find((item) =>
+                item.results.some((result) => result.letter === verif.letter),
+              ),
+            }))
+            .find(
+              (item) =>
+                item.entry && item.laws.length < item.verif.family.laws.length,
+            );
+          let explanation =
+            "Sondez un indice pour commencer à écarter des promesses.";
+          if (observed) {
+            const result = observed.entry.results.find(
+              (item) => item.letter === observed.verif.letter,
+            );
+            explanation = `Pour l’indice ${observed.verif.letter}, [${observed.entry.code.join(" - ")}] a reçu ${result.passed ? "une réponse émeraude" : "une réponse rubis"}. Après croisement de vos réponses à cette carte, ${observed.laws.length === 1 ? "la seule promesse encore possible est" : "les promesses encore possibles sont"} : ${observed.laws.map((law) => `« ${law.label} »`).join(", ")}.`;
+          } else if (count > 0) {
+            explanation =
+              "Aucune promesse ne peut encore être écartée sur une carte sondée.";
+          }
+          const inconsistency =
+            "Aucune combinaison ne correspond aux réponses du Journal. Vérifiez le Journal ou recommencez la partie : les données de l’énigme sont incohérentes.";
           const murI = {
             level: 1,
             badge: "Murmure I • Le Souffle",
             title: "L’horizon des étreintes compatibles",
-            body:
-              observedObservations.length === 0
-                ? `Vous n’avez pas encore sondé l’Oracle : les <strong class="text-champagne">125 accords</strong> restent ouverts. L’indice le plus tranchant à explorer en premier est <strong class="text-gold">${bestVerifier.letter} (${bestVerifier.family.title})</strong>, dont la vérité secrète ne retient que <strong class="text-emeraldGlow">${bestLawMatches} combinaisons sur 125</strong>.`
-                : `D’après les <strong class="text-champagne">${observedObservations.length} frisson(s)</strong> déjà sondés dans le Journal des Nuits, <strong class="text-emeraldGlow">${logicallyCompatible.length} combinaison(s) sur 125</strong> restent compatibles avec les réponses reçues, sans appliquer les Serments d’Or.`,
+            body: candidates.length
+              ? `Après ${count} sondage(s), <strong class="text-emeraldGlow">${candidates.length} combinaison(s) sur 125</strong> restent compatibles avec les réponses, sans appliquer les Serments d’Or. ${explanation}`
+              : inconsistency,
           };
-          // 3. Murmure II : La Piste (désigne l'Indice le plus discriminant à interroger)
-          const currentProposalArr = [
-            state.proposal.blue,
-            state.proposal.yellow,
-            state.proposal.purple,
+
+          const current = [proposal.blue, proposal.yellow, proposal.purple];
+          const testedLetters = Object.keys(tested);
+          const locked = testedLetters.length > 0 && testedLetters.length < 3;
+          const hypotheticalLaws = verifiers.map((verif) =>
+            candidates.map((code) => {
+              const laws = verif.family.laws.filter((law) => law.test(code));
+              if (laws.length !== 1) {
+                throw new Error(
+                  `Partition invalide pour l'indice ${verif.letter}`,
+                );
+              }
+              return laws[0];
+            }),
+          );
+          function findBestTest(proposals, available) {
+            let best = null;
+            proposals.forEach((code) => {
+              available.forEach((verifIndex) => {
+                const yes = hypotheticalLaws[verifIndex].filter((law) =>
+                  law.test(code),
+                ).length;
+                const no = candidates.length - yes;
+                const score = Math.min(yes, no);
+                if (score > 0 && (!best || score > best.score)) {
+                  best = { code, verif: verifiers[verifIndex], yes, no, score };
+                }
+              });
+            });
+            return best;
+          }
+          const allVerifiers = verifiers.map((_, index) => index);
+          const available = locked
+            ? allVerifiers.filter(
+                (index) => !testedLetters.includes(verifiers[index].letter),
+              )
+            : allVerifiers;
+          const allProposals = [
+            current,
+            ...ALL_CODES.filter((code) =>
+              code.some((value, i) => value !== current[i]),
+            ),
           ];
-          const wouldPassNow = bestVerifier.activeLaw.test(currentProposalArr);
+          let nextNight = testedLetters.length >= 3;
+          let best =
+            candidates.length > 1 && !gameOver
+              ? findBestTest(locked ? [current] : allProposals, available)
+              : null;
+          if (!best && locked && candidates.length > 1 && !gameOver) {
+            best = findBestTest(allProposals, allVerifiers);
+            nextNight = Boolean(best);
+          }
           const murII = {
             level: 2,
             badge: "Murmure II • La Piste",
-            title: "Où poser votre regard cette nuit",
-            body:
-              untestedVerifiers.length > 0
-                ? `L’indice <strong class="text-gold">${bestVerifier.letter} — « ${bestVerifier.family.title} »</strong> (${bestVerifier.family.subtitle}) n’a pas encore livré son secret et permet de trancher nettement parmi les pistes restantes. Avec votre esquisse actuelle <span class="font-mono text-champagne">[${currentProposalArr.join(" - ")}]</span>, cet indice vibrerait d’un <strong class="${wouldPassNow ? "text-emeraldGlow" : "text-rubyGlow"}">${wouldPassNow ? "accord émeraude (✓)" : "voile rubis (✗)"}</strong>.`
-                : `Tous les Indices du Cœur ont déjà été sondés au moins une fois ! Concentrez-vous sur <strong class="text-gold">${bestVerifier.letter} — « ${bestVerifier.family.title} »</strong> : croisez ses promesses avec vos autres réponses pour isoler l’unique accord survivant.`,
+            title: "Où poser votre regard",
+            body: !candidates.length
+              ? inconsistency
+              : gameOver
+                ? "La partie est terminée. Lancez une nouvelle énigme pour sonder d’autres indices."
+                : candidates.length === 1
+                  ? "Une seule combinaison reste compatible avec vos réponses : vous pouvez la retrouver en croisant vos déductions avant de sceller l’étreinte."
+                  : best
+                    ? `${nextNight ? "Passez à la nuit suivante, puis choisissez" : locked ? "Conservez votre proposition scellée" : "Choisissez"} <strong class="text-champagne">[${best.code.join(" - ")}]</strong> et sondez l’indice <strong class="text-gold">${best.verif.letter} — « ${best.verif.family.title} »</strong>. Une réponse émeraude laisserait ${best.yes} piste(s), et une réponse rubis ${best.no} ; la réponse réelle reste à découvrir.`
+                    : "Aucun sondage ne distingue davantage les pistes restantes. Croisez vos déductions avec les Serments d’Or.",
           };
-          // 4. Murmure III : La Clé de Non-Redondance (nuance garantie absente de la solution)
-          const dimOrder = ["blue", "yellow", "purple"];
-          let chosenDimKey = "blue";
-          let eliminatedVal = 1;
-          for (let dIdx = 0; dIdx < 3; dIdx++) {
-            const dk = dimOrder[dIdx];
-            const secretVal = secret[dIdx];
-            // Choisir une valeur différente du secret (en privilégiant une valeur non encore éliminée par le joueur)
-            const candidates = [1, 2, 3, 4, 5].filter((v) => v !== secretVal);
-            const unmarked = candidates.find(
-              (v) => state.notes[dk][v - 1] !== 1,
-            );
-            if (unmarked !== undefined) {
-              chosenDimKey = dk;
-              eliminatedVal = unmarked;
-              break;
+          const excluded = [];
+          ["blue", "yellow", "purple"].forEach((key, index) => {
+            for (let value = 1; value <= 5; value++) {
+              if (!candidates.some((code) => code[index] === value)) {
+                excluded.push({ key, value });
+              }
             }
-            chosenDimKey = dk;
-            eliminatedVal = candidates[0];
-          }
-          const dimObj = DIMENSIONS[chosenDimKey];
+          });
+          const deduction =
+            excluded.find(({ key, value }) => notes[key][value - 1] !== 1) ||
+            excluded[0];
           const murIII = {
             level: 3,
-            badge: "Murmure III • La Clé du Serment d’Or",
-            title: "Une nuance exclue par la pureté du désir",
-            body: `Par le croisement des ${puzzle.difficulty} Indices du Cœur et le Serment de non-redondance, la nuance <strong class="text-crimson">${eliminatedVal}. « ${dimObj.values[eliminatedVal]} »</strong> dans la dimension <strong class="${dimObj.textClass}">${dimObj.name}</strong> est <strong class="text-champagne">garantie absente</strong> de l’étreinte secrète de B. &amp; V. Vous pouvez la voiler sur La Carte du Tendre.`,
+            badge: "Murmure III • La Clé",
+            title: "Une nuance à voiler",
+            body: !candidates.length
+              ? inconsistency
+              : deduction
+                ? `Aucune des ${candidates.length} combinaison(s) compatibles avec vos réponses ne contient <strong class="text-crimson">${deduction.value}. « ${DIMENSIONS[deduction.key].values[deduction.value]} »</strong> pour <strong class="${DIMENSIONS[deduction.key].textClass}">${DIMENSIONS[deduction.key].name}</strong>. Vous pouvez donc voiler cette nuance sur la Carte du Tendre.`
+                : "Les réponses ne permettent pas encore d’écarter une nuance entière. Poursuivez les sondages pour affiner vos déductions.",
           };
           return [murI, murII, murIII];
         }
         function renderHintsModal() {
-          const hints = computeProgressiveHints();
+          const verifiers = state.puzzle.verifiers.map(({ letter, family }) => ({
+            letter,
+            family,
+          }));
+          const hints = computeProgressiveHints(
+            verifiers,
+            state.history,
+            state.proposal,
+            state.roundTestedVerifiers,
+            state.notes,
+            state.gameOver,
+          );
           const container = document.getElementById("hintsListContainer");
           document.getElementById("hintsProgressLabel").textContent =
             `${state.revealedHints} / 3 murmures dévoilés cette nuit`;

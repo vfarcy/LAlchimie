@@ -61,7 +61,13 @@ Une réponse émeraude sur une carte ne suffit pas à prouver que la rencontre e
 
 Sur la **Carte du Tendre**, cliquez sur une nuance pour la marquer comme éliminée, cliquez à nouveau pour la confirmer, puis une troisième fois pour la remettre à l’état neutre. Ces marques sont vos notes personnelles : le compteur d’accords encore possibles se fonde sur elles, et non sur les réponses du Journal.
 
-Le bouton **Murmure** propose trois niveaux d’aide progressive : le premier compte les combinaisons compatibles avec les réponses du Journal, sans appliquer les Serments d’Or ; les suivants peuvent suggérer un indice à sonder ou révéler une nuance à écarter. Ces aides utilisent aussi le secret calculé par le jeu et ne coûtent pas de soupir.
+Le bouton **Murmure** propose trois niveaux d’aide progressive, sans consulter le secret et sans coûter de soupir :
+
+1. **Le Souffle** compte les combinaisons compatibles avec les réponses du Journal et explique les promesses encore possibles pour une carte sondée.
+2. **La Piste** propose un sondage et indique comment ses deux réponses possibles partageraient les pistes, sans prédire la réponse.
+3. **La Clé** explique une nuance à écarter lorsque les réponses le permettent ; sinon, elle invite à poursuivre les sondages.
+
+Ces déductions utilisent les promesses affichées et les réponses reçues, sans appliquer les Serments d’Or ni restreindre les pistes selon les marques de la Carte du Tendre. La Clé privilégie néanmoins une nuance qui n’a pas déjà été voilée.
 
 ### Sceller l’étreinte
 
@@ -90,8 +96,10 @@ Le bas de page affiche l’heure UTC de préparation du déploiement et le numé
 
 ## Audit et vérification
 
-Le banc d’épreuve est accessible depuis le bouton « Banc d’Épreuve ». Il teste les 19 familles d’indices sur les 125 combinaisons, génère 300 énigmes (100 par intensité), vérifie le solveur sur 60 parties et contrôle le calcul des pistes du premier Murmure.
+Le banc d’épreuve est accessible depuis le bouton « Banc d’Épreuve ». Il teste les 19 familles d’indices sur les 125 combinaisons, génère 300 énigmes (100 par intensité), vérifie le solveur sur 60 parties et contrôle les déductions des Murmures.
 
-À noter : le compteur « accords encore possibles » de la Carte du Tendre ne lit que les marques posées par le joueur. Il ne recalcule pas les possibilités à partir des réponses du Journal. Les indices progressifs utilisent également le secret.
+Le solveur simulé choisit ses propositions à partir des réponses déjà obtenues et interroge au maximum trois indices par nuit. Il ne connaît ni le secret ni les lois cachées : l’Oracle les utilise uniquement pour répondre, puis la solution est vérifiée à la fin. Les résultats portent sur les 60 énigmes testées et ne prouvent pas une stratégie optimale.
+
+À noter : le compteur « accords encore possibles » de la Carte du Tendre ne lit que les marques posées par le joueur. Il ne recalcule pas les possibilités à partir des réponses du Journal ; les Murmures, eux, fondent leurs déductions sur ces réponses.
 
 L’application a été vérifiée en la lançant directement dans un navigateur et en exécutant son banc d’épreuve intégré. Tailwind signale dans la console que son CDN est prévu pour le développement ; pour un déploiement de production, il est préférable de compiler les styles plutôt que de dépendre de `cdn.tailwindcss.com`.
