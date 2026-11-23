@@ -61,7 +61,7 @@ Une réponse émeraude sur une carte ne suffit pas à prouver que la rencontre e
 
 Sur la **Carte du Tendre**, cliquez sur une nuance pour la marquer comme éliminée, cliquez à nouveau pour la confirmer, puis une troisième fois pour la remettre à l’état neutre. Ces marques sont vos notes personnelles : le compteur d’accords encore possibles se fonde sur elles, et non sur les réponses du Journal.
 
-Le bouton **Murmure** propose trois niveaux d’aide progressive calculés à partir de la partie : ils peuvent éclairer l’espace de recherche, suggérer un indice à sonder ou révéler une nuance à écarter. Ces aides utilisent aussi le secret calculé par le jeu.
+Le bouton **Murmure** propose trois niveaux d’aide progressive : le premier compte les combinaisons compatibles avec les réponses du Journal, sans appliquer les Serments d’Or ; les suivants peuvent suggérer un indice à sonder ou révéler une nuance à écarter. Ces aides utilisent aussi le secret calculé par le jeu et ne coûtent pas de soupir.
 
 ### Sceller l’étreinte
 
@@ -90,8 +90,8 @@ Le bas de page affiche l’heure UTC de préparation du déploiement et le numé
 
 ## Audit et vérification
 
-Le banc d’épreuve est accessible depuis le bouton « Banc d’Épreuve ». Il teste les 19 familles d’indices sur les 125 combinaisons, génère 300 énigmes (100 par intensité) et vérifie le solveur sur 60 parties. Lors de l’audit, les **1 034 contrôles** affichés par cette suite ont réussi.
+Le banc d’épreuve est accessible depuis le bouton « Banc d’Épreuve ». Il teste les 19 familles d’indices sur les 125 combinaisons, génère 300 énigmes (100 par intensité), vérifie le solveur sur 60 parties et contrôle le calcul des pistes du premier Murmure.
 
-À noter : le compteur « accords encore possibles » de la Carte du Tendre ne lit que les marques posées par le joueur. Il ne recalcule pas les possibilités à partir des réponses du Journal ; les indices progressifs tiennent compte de la partie et utilisent également le secret.
+À noter : le compteur « accords encore possibles » de la Carte du Tendre ne lit que les marques posées par le joueur. Il ne recalcule pas les possibilités à partir des réponses du Journal. Les indices progressifs utilisent également le secret.
 
 L’application a été vérifiée en la lançant directement dans un navigateur et en exécutant son banc d’épreuve intégré. Tailwind signale dans la console que son CDN est prévu pour le développement ; pour un déploiement de production, il est préférable de compiler les styles plutôt que de dépendre de `cdn.tailwindcss.com`.

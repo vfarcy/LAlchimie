@@ -1247,6 +1247,44 @@
                 pour explorer un nouvel accord.
               </li>
             </ol>
+            <div class="pt-2 border-t border-gold/15 space-y-2 text-xs text-dusty">
+              <p>
+                <strong class="text-champagne"> S&rsquo;aider des Murmures : </strong>
+                Le bouton <strong class="text-cream"> Murmure (Indices) </strong>
+                ouvre trois aides &agrave; &eacute;couter dans l&rsquo;ordre :
+              </p>
+              <ul class="list-disc list-inside space-y-1">
+                <li>
+                  <strong class="text-cream"> Le Souffle </strong> compte les
+                  pistes compatibles avec les r&eacute;ponses du Journal, sans
+                  appliquer les Serments d&rsquo;Or. Avant tout sondage, il
+                  sugg&egrave;re aussi un indice.
+                </li>
+                <li>
+                  <strong class="text-cream"> La Piste </strong> sugg&egrave;re
+                  une carte &agrave; examiner et peut indiquer sa r&eacute;ponse
+                  pour votre proposition actuelle.
+                </li>
+                <li>
+                  <strong class="text-cream"> La Cl&eacute; </strong> indique
+                  une nuance absente de la solution, que vous pouvez voiler sur
+                  la Carte du Tendre.
+                </li>
+              </ul>
+              <p>
+                Ces aides utilisent le secret de l&rsquo;&eacute;nigme et
+                n&rsquo;ajoutent pas de soupir. Elles ne r&eacute;solvent pas
+                n&eacute;cessairement toute la partie.
+              </p>
+              <p>
+                <strong class="text-champagne"> Carte et Journal : </strong>
+                Sur la Carte du Tendre, cliquez sur une valeur pour la voiler,
+                puis pour la confirmer, puis pour la remettre neutre. Son
+                compteur d&rsquo;accords possibles ne tient compte que de vos
+                marques, pas des r&eacute;ponses du Journal. Celui-ci conserve
+                vos propositions et les r&eacute;ponses obtenues.
+              </p>
+            </div>
           </div>
           <!-- Acte 3 -->
           <div
@@ -3026,6 +3064,88 @@
             ok: solverWins === solverSampleCount,
             detail: `${solverWins}/${solverSampleCount} victoires sans hasard. Convergence moyenne en ${avgNights} nuits (${avgSighs} soupirs).`,
           });
+          const hintVerifiers = [
+            {
+              letter: "A",
+              family: {
+                laws: [
+                  { test: (code) => code[0] % 2 === 0 },
+                  { test: (code) => code[0] % 2 !== 0 },
+                ],
+              },
+            },
+            {
+              letter: "B",
+              family: {
+                laws: [
+                  { test: (code) => code[1] <= 2 },
+                  { test: (code) => code[1] > 2 },
+                ],
+              },
+            },
+          ];
+          const oddRejected = {
+            code: [1, 1, 1],
+            results: [{ letter: "A", passed: false }],
+          };
+          const evenAccepted = {
+            code: [2, 1, 1],
+            results: [{ letter: "A", passed: true }],
+          };
+          const lowAccepted = {
+            code: [1, 1, 1],
+            results: [{ letter: "B", passed: true }],
+          };
+          const hintCases = [
+            { name: "sans sondage", history: [], expected: () => true },
+            {
+              name: "réponse rubis",
+              history: [oddRejected],
+              expected: (code) => code[0] % 2 === 0,
+            },
+            {
+              name: "réponses opposées",
+              history: [oddRejected, evenAccepted],
+              expected: (code) => code[0] % 2 === 0,
+            },
+            {
+              name: "indices croisés",
+              history: [oddRejected, evenAccepted, lowAccepted],
+              expected: (code) => code[0] % 2 === 0 && code[1] <= 2,
+            },
+            {
+              name: "réponses contradictoires",
+              history: [
+                oddRejected,
+                { code: [1, 1, 1], results: [{ letter: "A", passed: true }] },
+              ],
+              expected: () => false,
+            },
+          ];
+          const hintFailures = [];
+          for (const testCase of hintCases) {
+            const actual = getCompatibleCodes(hintVerifiers, testCase.history);
+            const expected = ALL_CODES.filter(testCase.expected);
+            totalChecks += 1;
+            if (
+              actual.length === expected.length &&
+              actual.every((code, i) => code === expected[i])
+            ) {
+              passedChecks += 1;
+            } else {
+              hintFailures.push(
+                `${testCase.name} : ${actual.length} pistes au lieu de ${expected.length}`,
+              );
+            }
+          }
+          logs.push({
+            title: "Test 4 — Pistes compatibles avec les réponses",
+            ok: hintFailures.length === 0,
+            detail:
+              hintFailures.length === 0
+                ? `${hintCases.length} scénarios vérifiés, dont les réponses rubis et les sondages répétés.`
+                : hintFailures.join(" | "),
+          });
           // Mise à jour des compteurs de la modale
           const rate = ((passedChecks / totalChecks) * 100).toFixed(1);
           document.getElementById("benchSuccessRate").textContent = `${rate}%`;
@@ -3072,6 +3192,22 @@
         // -------------------------------------------------------------------------
         // 11B. MOTEUR DES INDICES PROGRESSIFS (MURMURE DE L'INTUITION)
         // -------------------------------------------------------------------------
+        function getCompatibleCodes(verifiers, history) {
+          const possibleLaws = verifiers.map((verif) =>
+            verif.family.laws.filter((law) =>
+              history.every((entry) =>
+                entry.results.every(
+                  (result) =>
+                    result.letter !== verif.letter ||
+                    law.test(entry.code) === result.passed,
+                ),
+              ),
+            ),
+          );
+          return ALL_CODES.filter((code) =>
+            possibleLaws.every((laws) => laws.some((law) => law.test(code))),
+          );
+        }
         function computeProgressiveHints() {
           const puzzle = state.puzzle;
           const secret = puzzle.secret;
@@ -3090,10 +3226,9 @@
               }
             });
           });
-          const logicallyCompatible = ALL_CODES.filter((code) =>
-            observedObservations.every(
-              (obs) => obs.verif.activeLaw.test(code) === obs.passed,
-            ),
+          const logicallyCompatible = getCompatibleCodes(
+            puzzle.verifiers,
+            state.history,
           );
           // Identifier les indices jamais encore sondés
           const testedLetters = new Set(
@@ -3129,7 +3264,7 @@
             body:
               observedObservations.length === 0
                 ? `Vous n’avez pas encore sondé l’Oracle : les <strong class="text-champagne">125 accords</strong> restent ouverts. L’indice le plus tranchant à explorer en premier est <strong class="text-gold">${bestVerifier.letter} (${bestVerifier.family.title})</strong>, dont la vérité secrète ne retient que <strong class="text-emeraldGlow">${bestLawMatches} combinaisons sur 125</strong>.`
-                : `D’après les <strong class="text-champagne">${observedObservations.length} frisson(s)</strong> déjà sondés dans le Journal des Nuits, il ne subsiste mathématiquement que <strong class="text-emeraldGlow">${logicallyCompatible.length} combinaison(s) sur 125</strong> compatibles avec les réponses reçues.`,
+                : `D’après les <strong class="text-champagne">${observedObservations.length} frisson(s)</strong> déjà sondés dans le Journal des Nuits, <strong class="text-emeraldGlow">${logicallyCompatible.length} combinaison(s) sur 125</strong> restent compatibles avec les réponses reçues, sans appliquer les Serments d’Or.`,
           };
           // 3. Murmure II : La Piste (désigne l'Indice le plus discriminant à interroger)
           const currentProposalArr = [
