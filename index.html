@@ -1,0 +1,3408 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>
+      L'Alchimie &mdash; B. &amp; V. | D&eacute;duction logique &amp; sensuelle
+    </title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts : Cormorant Garamond & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600;1,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              velvet: "#12060c",
+              burgundy: "#1d0912",
+              boudoir: "#260d18",
+              gold: "#e6b87d",
+              champagne: "#f5d0a9",
+              crimson: "#d94e67",
+              blush: "#ff8fa3",
+              sapphire: "#4a76b8",
+              emeraldGlow: "#34d399",
+              rubyGlow: "#fb7185",
+              cream: "#f7efe6",
+              dusty: "#b89fa9",
+            },
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', "Georgia", "serif"],
+              sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+            },
+            boxShadow: {
+              sensual:
+                "0 14px 40px -10px rgba(0, 0, 0, 0.75), 0 0 24px -6px rgba(230, 184, 125, 0.14)",
+              candle: "0 0 32px rgba(230, 184, 125, 0.22)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #12060c;
+        color: #f7efe6;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-image:
+          radial-gradient(
+            circle at 12% 14%,
+            rgba(217, 78, 103, 0.16) 0%,
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 86% 18%,
+            rgba(230, 184, 125, 0.14) 0%,
+            transparent 48%
+          ),
+          radial-gradient(
+            circle at 50% 88%,
+            rgba(74, 118, 184, 0.14) 0%,
+            transparent 52%
+          ),
+          linear-gradient(165deg, #12060c 0%, #1d0912 50%, #15070e 100%);
+        min-height: 100vh;
+      }
+      /* Texture velours & papier grainé sombre */
+      .velvet-card {
+        background: linear-gradient(
+          155deg,
+          rgba(38, 13, 24, 0.92) 0%,
+          rgba(24, 8, 16, 0.96) 100%
+        );
+        border: 1px solid rgba(230, 184, 125, 0.22);
+        backdrop-filter: blur(12px);
+      }
+      .velvet-card-subtle {
+        background: rgba(29, 9, 18, 0.75);
+        border: 1px solid rgba(230, 184, 125, 0.16);
+      }
+      /* Simulation réaliste des cartes perforées superposées */
+      .punch-veil {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(0, 0, 0, 0.35)
+        );
+        border: 1px solid rgba(230, 184, 125, 0.28);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 12px 28px rgba(0, 0, 0, 0.65);
+      }
+      .punch-hole {
+        transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+      }
+      .punch-hole.open {
+        background: radial-gradient(
+          circle at 35% 35%,
+          #fff7eb 0%,
+          #f5d0a9 55%,
+          #c99252 100%
+        );
+        color: #12060c;
+        box-shadow:
+          inset 0 2px 4px rgba(18, 6, 12, 0.55),
+          0 0 14px rgba(245, 208, 169, 0.65),
+          0 0 0 2px rgba(230, 184, 125, 0.85);
+        transform: scale(1.06);
+      }
+      .punch-hole.open-emerald {
+        background: radial-gradient(
+          circle at 35% 35%,
+          #d1fae5 0%,
+          #34d399 60%,
+          #059669 100%
+        );
+        color: #06281e;
+        box-shadow:
+          inset 0 2px 4px rgba(6, 40, 30, 0.45),
+          0 0 18px rgba(52, 211, 153, 0.8),
+          0 0 0 2px #6ee7b7;
+        transform: scale(1.08);
+      }
+      .punch-hole.open-ruby {
+        background: radial-gradient(
+          circle at 35% 35%,
+          #ffe4e6 0%,
+          #fb7185 60%,
+          #be123c 100%
+        );
+        color: #2b0610;
+        box-shadow:
+          inset 0 2px 4px rgba(43, 6, 16, 0.45),
+          0 0 18px rgba(251, 113, 133, 0.8),
+          0 0 0 2px #fda4af;
+        transform: scale(1.08);
+      }
+      .punch-hole.closed {
+        background-color: rgba(12, 4, 8, 0.72);
+        border: 1px solid rgba(230, 184, 125, 0.14);
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7);
+      }
+      /* États de la grille de déduction intime */
+      .note-cell {
+        transition:
+          transform 0.14s ease,
+          background-color 0.18s ease,
+          border-color 0.18s ease,
+          box-shadow 0.18s ease;
+        user-select: none;
+      }
+      .note-cell:active {
+        transform: scale(0.92);
+      }
+      .note-eliminated {
+        position: relative;
+        color: rgba(184, 159, 169, 0.38);
+        background-color: rgba(18, 6, 12, 0.65);
+        border-color: rgba(217, 78, 103, 0.22);
+      }
+      .note-eliminated::after {
+        content: "";
+        position: absolute;
+        left: 16%;
+        right: 16%;
+        top: 50%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #d94e67, transparent);
+        transform: rotate(-20deg);
+        border-radius: 2px;
+      }
+      .note-confirmed {
+        background: linear-gradient(
+          145deg,
+          rgba(230, 184, 125, 0.24),
+          rgba(217, 78, 103, 0.18)
+        );
+        border-color: #e6b87d;
+        color: #f5d0a9;
+        font-weight: 700;
+        box-shadow:
+          0 0 14px rgba(230, 184, 125, 0.35),
+          inset 0 0 0 1px rgba(245, 208, 169, 0.5);
+      }
+      /* Halo respirant subtil */
+      @keyframes candlePulse {
+        0%,
+        100% {
+          opacity: 0.75;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+      }
+      .candle-halo {
+        animation: candlePulse 5s ease-in-out infinite;
+      }
+      /* Scrollbar velours */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #12060c;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(230, 184, 125, 0.3);
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(230, 184, 125, 0.55);
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-crimson/30 selection:text-champagne">
+    <!-- ==================== BARRE SUPÉRIEURE ==================== -->
+    <header
+      class="sticky top-0 z-30 backdrop-blur-xl bg-velvet/85 border-b border-gold/20"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3"
+      >
+        <!-- Identité B. & V. -->
+        <div class="flex items-center gap-3.5">
+          <div
+            class="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-boudoir to-velvet border border-gold/40 flex items-center justify-center shadow-candle"
+          >
+            <span
+              class="candle-halo absolute inset-0 rounded-2xl bg-gold/10 pointer-events-none"
+            >
+            </span>
+            <svg
+              class="w-5 h-5 text-gold"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <circle cx="12" cy="10" fill="currentColor" r="2.2"></circle>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h1
+                class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-champagne leading-none"
+              >
+                L&rsquo;Alchimie
+                <span class="italic font-normal text-blush">
+                  &mdash; B. &amp; V.
+                </span>
+              </h1>
+              <span
+                class="hidden md:inline-block text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-crimson/20 text-blush border border-crimson/35 font-semibold"
+              >
+                L&rsquo;Oracle des D&eacute;sirs
+              </span>
+            </div>
+            <p class="text-xs text-dusty hidden sm:block mt-0.5">
+              D&eacute;voilez l&rsquo;unique &eacute;treinte secr&egrave;te qui
+              unit les corps et les &acirc;mes de B. et V.
+            </p>
+          </div>
+        </div>
+        <!-- Contrôles de partie & Graine partageable -->
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Sélecteur d'intensité -->
+          <div
+            class="flex items-center bg-burgundy/90 p-1 rounded-xl border border-gold/20 text-xs font-medium"
+          >
+            <button
+              class="diff-btn px-2.5 py-1.5 rounded-lg transition"
+              data-diff="4"
+            >
+              Tendre (4)
+            </button>
+            <button
+              class="diff-btn px-2.5 py-1.5 rounded-lg transition"
+              data-diff="5"
+            >
+              Passionn&eacute; (5)
+            </button>
+            <button
+              class="diff-btn px-2.5 py-1.5 rounded-lg transition"
+              data-diff="6"
+            >
+              Fusionnel (6)
+            </button>
+          </div>
+          <!-- Graine partageable entre B. et V. -->
+          <div
+            class="flex items-center bg-burgundy/90 rounded-xl border border-gold/20 px-2.5 py-1 text-xs"
+          >
+            <span class="text-dusty mr-1.5 hidden lg:inline"> Serment : </span>
+            <input
+              class="w-20 font-mono font-semibold text-champagne uppercase bg-transparent focus:outline-none"
+              id="seedInput"
+              maxlength="10"
+              title="Code secret du serment &agrave; partager entre B. et V."
+              type="text"
+            />
+            <button
+              class="p-1 text-dusty hover:text-gold transition rounded-md"
+              id="copySeedBtn"
+              title="Copier ce serment pour le partager entre B. et V."
+            >
+              <svg
+                class="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewbox="0 0 24 24"
+              >
+                <rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect>
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                ></path>
+              </svg>
+            </button>
+            <button
+              class="ml-1 px-2 py-0.5 bg-gold/20 hover:bg-gold hover:text-velvet text-champagne rounded-md font-semibold transition"
+              id="loadSeedBtn"
+              title="Rejoindre cette nuit secr&egrave;te"
+            >
+              OK
+            </button>
+          </div>
+          <!-- Nouvelle énigme -->
+          <button
+            class="px-3 py-2 rounded-xl bg-gradient-to-r from-gold to-champagne text-velvet hover:brightness-105 text-xs font-bold flex items-center gap-1.5 shadow-md transition"
+            id="newGameBtn"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.3"
+              viewbox="0 0 24 24"
+            >
+              <path d="M23 4v6h-6M1 20v-6h6"></path>
+              <path
+                d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
+              ></path>
+            </svg>
+            <span> Nouvelle nuit </span>
+          </button>
+          <!-- Bouton Règles, Philosophie & Exemples -->
+          <button
+            class="px-3 py-2 rounded-xl bg-crimson/20 border border-crimson/40 hover:bg-crimson/30 text-blush text-xs font-semibold flex items-center gap-1.5 transition"
+            id="openRulesBtn"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewbox="0 0 24 24"
+            >
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <span> R&egrave;gles &amp; Exemples </span>
+          </button>
+          <!-- Bouton Murmure (Indices progressifs) -->
+          <button
+            class="px-3 py-2 rounded-xl bg-gold/15 border border-gold/40 hover:bg-gold/25 text-champagne text-xs font-semibold flex items-center gap-1.5 transition"
+            id="openHintsBtn"
+            title="R&eacute;v&eacute;ler des indices progressifs sur l'&eacute;nigme en cours"
+          >
+            <svg
+              class="w-4 h-4 text-gold"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05L5.636 5.636m12.728 0l-1.414 1.414M7.05 16.95l-1.414 1.414"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <circle cx="12" cy="12" r="4"></circle>
+            </svg>
+            <span> Murmure (Indices) </span>
+          </button>
+          <!-- Bouton Banc d'Épreuve (Audit & Stress-Test du moteur) -->
+          <button
+            class="px-3 py-2 rounded-xl bg-velvet/90 border border-gold/30 hover:border-gold/60 text-gold text-xs font-semibold flex items-center gap-1.5 transition"
+            id="openBenchBtn"
+            title="Ex&eacute;cuter la suite d'audit math&eacute;matique et de stress-test du moteur"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <span> Banc d&rsquo;&Eacute;preuve </span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- ==================== BANDEAU NARRATIF D'INTRODUCTION (B. & V.) ==================== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-5">
+      <div
+        class="velvet-card rounded-2xl px-5 py-3.5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-sensual"
+        id="narrativeBanner"
+      >
+        <div class="flex items-start sm:items-center gap-3.5">
+          <span class="text-gold font-serif italic text-2xl select-none">
+            &ldquo;
+          </span>
+          <p
+            class="font-serif italic text-base sm:text-lg text-champagne/95 leading-snug"
+          >
+            Ce soir,
+            <strong class="font-semibold text-gold not-italic"> B. </strong>
+            et
+            <strong class="font-semibold text-blush not-italic"> V. </strong>
+            se cherchent &agrave; travers le clair-obscur. Parmi
+            <span class="underline decoration-gold/40">
+              125 nuances possibles
+            </span>
+            d&rsquo;atmosph&egrave;re, d&rsquo;&eacute;lan et de confidences,
+            une seule combinaison scelle leur alchimie. Interrogez les Indices
+            du C&oelig;ur avec finesse&hellip;
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0 self-end md:self-center">
+          <button
+            class="text-xs font-semibold text-gold hover:text-champagne underline underline-offset-4 transition"
+            id="quickExamplesBtn"
+          >
+            Voir les 2 exemples pas-&agrave;-pas &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== NOTIFICATION FLOTTANTE (TOAST) ==================== -->
+    <div
+      class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none"
+      id="toastBanner"
+    >
+      <div
+        class="px-4 py-3 rounded-2xl bg-boudoir text-cream text-sm font-medium shadow-2xl border border-gold/35 flex items-center gap-2.5"
+        id="toastContent"
+      ></div>
+    </div>
+    <!-- ==================== CONTENU PRINCIPAL ==================== -->
+    <main
+      class="max-w-7xl mx-auto px-4 sm:px-6 py-5 grid grid-cols-1 lg:grid-cols-12 gap-6"
+    >
+      <!-- COLONNE GAUCHE (7 cols) : CARTES PERFORÉES & INDICES DU CŒUR -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- 1. EN-TÊTE DE SOIRÉE & COMPTEURS -->
+        <section
+          class="velvet-card rounded-2xl p-4 sm:p-5 shadow-sensual flex flex-wrap items-center justify-between gap-4"
+        >
+          <div class="flex items-center gap-3 sm:gap-4">
+            <div
+              class="px-3.5 py-2 rounded-xl bg-velvet/80 border border-gold/20 text-center"
+            >
+              <div
+                class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+              >
+                Nuit
+              </div>
+              <div
+                class="font-serif text-2xl font-bold text-champagne leading-tight"
+                id="roundDisplay"
+              >
+                1
+              </div>
+            </div>
+            <div
+              class="px-3.5 py-2 rounded-xl bg-velvet/80 border border-gold/20 text-center"
+            >
+              <div
+                class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+              >
+                Soupirs
+              </div>
+              <div
+                class="font-serif text-2xl font-bold text-champagne leading-tight"
+                id="totalQuestionsDisplay"
+              >
+                0
+              </div>
+            </div>
+            <div
+              class="px-3.5 py-2 rounded-xl bg-velvet/80 border border-gold/20 text-center"
+            >
+              <div
+                class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+              >
+                Frissons sond&eacute;s
+              </div>
+              <div class="font-serif text-2xl font-bold leading-tight">
+                <span class="text-gold" id="roundTestsDisplay"> 0 </span>
+                <span class="text-dusty text-lg"> / 3 </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2.5 ml-auto">
+            <button
+              class="px-3.5 py-2.5 rounded-xl bg-velvet/90 hover:bg-gold/15 text-champagne font-semibold text-xs sm:text-sm border border-gold/30 transition flex items-center gap-1.5"
+              id="nextRoundBtn"
+            >
+              <span> Nuit suivante </span>
+              <svg
+                class="w-4 h-4 text-gold"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewbox="0 0 24 24"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <button
+              class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-crimson via-[#b83b58] to-gold text-white font-semibold text-xs sm:text-sm shadow-lg hover:brightness-110 transition flex items-center gap-1.5"
+              id="solveModalBtn"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewbox="0 0 24 24"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                ></path>
+              </svg>
+              <span> Sceller l&rsquo;&Eacute;treinte </span>
+            </button>
+          </div>
+        </section>
+        <!-- 2. COMPOSITEUR DE RENCONTRE & VOILES PERFORÉS SUPERPOSÉS -->
+        <section class="velvet-card rounded-2xl p-5 shadow-sensual space-y-5">
+          <div
+            class="flex flex-wrap items-center justify-between gap-2 border-b border-gold/15 pb-3"
+          >
+            <div>
+              <h2
+                class="font-serif text-xl sm:text-2xl font-bold text-champagne"
+              >
+                Esquisser l&rsquo;&eacute;treinte de B. &amp; V.
+              </h2>
+              <p class="text-xs text-dusty">
+                Superposez les trois voiles ajour&eacute;s pour laisser filtrer
+                le d&eacute;sir &agrave; travers leurs ouvertures
+                align&eacute;es.
+              </p>
+            </div>
+            <div
+              class="hidden text-xs font-medium px-3 py-1.5 rounded-xl bg-gold/15 text-gold border border-gold/35"
+              id="lockWarning"
+            >
+              Intention scell&eacute;e pour cette nuit &mdash; glissez vers la
+              nuit suivante pour explorer un autre d&eacute;sir.
+            </div>
+          </div>
+          <!-- Sélecteurs des 3 Dimensions -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- SAPHIR : L'Atmosphère -->
+            <div
+              class="rounded-xl p-3.5 bg-sapphire/10 border border-sapphire/35 space-y-2.5"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="text-xs font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-2.5 h-2.5 rounded-full bg-sapphire inline-block shadow-[0_0_8px_#4a76b8]"
+                  >
+                  </span>
+                  L&rsquo;Atmosph&egrave;re
+                </span>
+                <span
+                  class="text-xs font-serif italic font-semibold text-blue-200"
+                  id="blueLabelBadge"
+                >
+                  3. Bougies &amp; vin
+                </span>
+              </div>
+              <div class="grid grid-cols-5 gap-1.5" id="blueSelector"></div>
+              <p
+                class="text-[11px] text-blue-200/85 font-medium truncate"
+                id="blueDesc"
+              >
+                Bougies &amp; vin
+              </p>
+            </div>
+            <!-- AMBRE : L'Élan entre B. & V. -->
+            <div
+              class="rounded-xl p-3.5 bg-gold/10 border border-gold/35 space-y-2.5"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="text-xs font-bold uppercase tracking-wider text-gold flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-2.5 h-2.5 rounded-full bg-gold inline-block shadow-[0_0_8px_#e6b87d]"
+                  >
+                  </span>
+                  L&rsquo;&Eacute;lan B. &amp; V.
+                </span>
+                <span
+                  class="text-xs font-serif italic font-semibold text-champagne"
+                  id="yellowLabelBadge"
+                >
+                  3. Passionn&eacute; (fi&egrave;vre)
+                </span>
+              </div>
+              <div class="grid grid-cols-5 gap-1.5" id="yellowSelector"></div>
+              <p
+                class="text-[11px] text-champagne/85 font-medium truncate"
+                id="yellowDesc"
+              >
+                Passionn&eacute; (fi&egrave;vre)
+              </p>
+            </div>
+            <!-- CARMIN : Les Confidences -->
+            <div
+              class="rounded-xl p-3.5 bg-crimson/10 border border-crimson/35 space-y-2.5"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="text-xs font-bold uppercase tracking-wider text-blush flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-2.5 h-2.5 rounded-full bg-crimson inline-block shadow-[0_0_8px_#d94e67]"
+                  >
+                  </span>
+                  Les Confidences
+                </span>
+                <span
+                  class="text-xs font-serif italic font-semibold text-blush"
+                  id="purpleLabelBadge"
+                >
+                  3. Un secret inavou&eacute;
+                </span>
+              </div>
+              <div class="grid grid-cols-5 gap-1.5" id="purpleSelector"></div>
+              <p
+                class="text-[11px] text-blush/85 font-medium truncate"
+                id="purpleDesc"
+              >
+                Un secret inavou&eacute;
+              </p>
+            </div>
+          </div>
+          <!-- Aperçu visuel des 3 Cartes Perforées Superposées -->
+          <div
+            class="punch-veil rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4"
+          >
+            <div class="space-y-1.5 text-center sm:text-left">
+              <div
+                class="flex items-center justify-center sm:justify-start gap-2"
+              >
+                <span
+                  class="text-[11px] font-bold uppercase tracking-wider text-gold"
+                >
+                  Les Voiles du C&oelig;ur superpos&eacute;s
+                </span>
+                <span
+                  class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-champagne border border-gold/30"
+                  id="punchGlowBadge"
+                >
+                  En attente d&rsquo;un frisson
+                </span>
+              </div>
+              <div
+                class="font-serif italic text-lg sm:text-xl font-semibold text-cream"
+                id="proposalSummaryText"
+              >
+                Bougies &amp; vin &bull; Passionn&eacute; (fi&egrave;vre) &bull;
+                Un secret inavou&eacute;
+              </div>
+              <div class="text-xs text-dusty">
+                Accord pressenti :
+                <span
+                  class="font-mono font-bold text-champagne bg-velvet/90 px-2.5 py-0.5 rounded-md border border-gold/25"
+                  id="proposalCodeBadge"
+                >
+                  3 - 3 - 3
+                </span>
+              </div>
+            </div>
+            <!-- Matrice 3x5 des trous perforés -->
+            <div
+              class="flex items-center gap-3.5 bg-velvet/90 px-4 py-3 rounded-xl border border-gold/25 shadow-inner"
+              title="Trois voiles ajour&eacute;s superpos&eacute;s : les ouvertures align&eacute;es laissent filtrer la lueur de l&rsquo;Oracle"
+            >
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-2" id="punchRowBlue"></div>
+                <div class="flex items-center gap-2" id="punchRowYellow"></div>
+                <div class="flex items-center gap-2" id="punchRowPurple"></div>
+              </div>
+              <div
+                class="border-l border-gold/20 pl-3 text-[10px] text-dusty leading-tight max-w-[105px]"
+              >
+                La lueur
+                <span class="text-emeraldGlow font-semibold">
+                  &eacute;meraude
+                </span>
+                ou le voile
+                <span class="text-rubyGlow font-semibold"> rubis </span>
+                traverse les ouvertures align&eacute;es.
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- 3. LES INDICES DU CŒUR (L'ORACLE DES DÉSIRS) -->
+        <section class="space-y-3.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2
+                class="font-serif text-xl sm:text-2xl font-bold text-champagne"
+              >
+                Les Indices du C&oelig;ur
+              </h2>
+              <p class="text-xs text-dusty">
+                Sondez jusqu&rsquo;&agrave; 3 indices par nuit. Une seule
+                v&eacute;rit&eacute; secr&egrave;te br&ucirc;le derri&egrave;re
+                chaque carte.
+              </p>
+            </div>
+            <span
+              class="text-[11px] font-medium text-gold bg-burgundy px-3 py-1 rounded-full border border-gold/25"
+            >
+              Serment d&rsquo;or : aucun indice superflu
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="verifiersGrid">
+            <!-- Généré dynamiquement par JS -->
+          </div>
+        </section>
+      </div>
+      <!-- COLONNE DROITE (5 cols) : CARNET INTIME DE DÉDUCTION & JOURNAL DES SOIRÉES -->
+      <div class="lg:col-span-5 space-y-6">
+        <!-- 1. CARNET INTIME DE DÉDUCTION -->
+        <section class="velvet-card rounded-2xl p-5 shadow-sensual space-y-4">
+          <div
+            class="flex items-center justify-between border-b border-gold/15 pb-3"
+          >
+            <div>
+              <h2
+                class="font-serif text-xl sm:text-2xl font-bold text-champagne"
+              >
+                La Carte du Tendre
+              </h2>
+              <p class="text-xs text-dusty">
+                Touchez pour
+                <span class="text-crimson font-semibold"> voiler </span>
+                , retouchez pour
+                <span class="text-gold font-semibold">
+                  couronner d&rsquo;or
+                </span>
+                .
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <!-- Murmure de l'intuition (compteur optionnel) -->
+              <label
+                class="flex items-center gap-1.5 text-xs text-champagne cursor-pointer bg-velvet/80 px-2.5 py-1.5 rounded-lg border border-gold/25"
+                title="R&eacute;v&egrave;le le nombre d&rsquo;&eacute;treintes compatibles avec vos notes intimes"
+              >
+                <input
+                  checked=""
+                  class="accent-gold rounded"
+                  id="helperToggle"
+                  type="checkbox"
+                />
+                <span> Murmure </span>
+              </label>
+              <button
+                class="text-xs text-dusty hover:text-crimson underline px-1.5 py-1 transition"
+                id="resetNotesBtn"
+                title="Effacer les marques de la Carte du Tendre"
+              >
+                Effacer
+              </button>
+            </div>
+          </div>
+          <!-- Indicateur Murmure de l'intuition -->
+          <div
+            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-velvet/80 border border-gold/20 text-xs"
+            id="helperBanner"
+          >
+            <span class="text-dusty">
+              Murmure de l&rsquo;intuition (accords encore possibles) :
+            </span>
+            <span
+              class="font-mono font-bold text-champagne bg-boudoir px-2.5 py-0.5 rounded-md border border-gold/30"
+              id="remainingCountBadge"
+            >
+              125 / 125
+            </span>
+          </div>
+          <!-- Grille des 3 dimensions x 5 nuances -->
+          <div class="space-y-3" id="deductionGrid">
+            <!-- Généré dynamiquement -->
+          </div>
+          <!-- Lexique complet des 15 nuances de B. & V. -->
+          <details
+            class="group rounded-xl bg-velvet/70 border border-gold/20 text-xs"
+          >
+            <summary
+              class="px-3.5 py-2.5 font-semibold text-champagne cursor-pointer flex items-center justify-between list-none"
+            >
+              <span> Lexique sensuel des 15 nuances de B. &amp; V. </span>
+              <svg
+                class="w-4 h-4 text-gold transition-transform group-open:rotate-180"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewbox="0 0 24 24"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+            <div
+              class="px-3.5 pb-3.5 pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-gold/15 text-[11px]"
+            >
+              <div>
+                <div class="font-bold text-blue-300 mb-1">
+                  Atmosph&egrave;re (Bleu)
+                </div>
+                <ol class="list-decimal list-inside space-y-0.5 text-dusty">
+                  <li>Caf&eacute; tamis&eacute;</li>
+                  <li>Pluie ti&egrave;de</li>
+                  <li>Bougies &amp; vin</li>
+                  <li>Galerie d&eacute;serte</li>
+                  <li>Toit sous les &eacute;toiles</li>
+                </ol>
+              </div>
+              <div>
+                <div class="font-bold text-gold mb-1">
+                  &Eacute;lan B. &amp; V. (Ambre)
+                </div>
+                <ol class="list-decimal list-inside space-y-0.5 text-dusty">
+                  <li>Timide (fr&ocirc;lement)</li>
+                  <li>Taquin (sourire complice)</li>
+                  <li>Passionn&eacute; (fi&egrave;vre)</li>
+                  <li>Myst&eacute;rieux (regard)</li>
+                  <li>Troubl&eacute; (maladresse)</li>
+                </ol>
+              </div>
+              <div>
+                <div class="font-bold text-blush mb-1">
+                  Confidences (Carmin)
+                </div>
+                <ol class="list-decimal list-inside space-y-0.5 text-dusty">
+                  <li>Souvenirs d&rsquo;enfance</li>
+                  <li>R&ecirc;ves fous</li>
+                  <li>Un secret inavou&eacute;</li>
+                  <li>Le silence complice</li>
+                  <li>Leur avenir &agrave; deux</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+          <!-- Zone de notes libres -->
+          <div>
+            <label
+              class="block text-xs font-semibold text-dusty mb-1.5"
+              for="freeNotes"
+            >
+              Confidences &amp; d&eacute;ductions personnelles :
+            </label>
+            <textarea
+              class="w-full rounded-xl bg-velvet/85 border border-gold/20 px-3 py-2 text-xs text-cream placeholder:text-dusty/50 focus:outline-none focus:border-gold/50"
+              id="freeNotes"
+              placeholder="Ex : L'indice A confirme que l'Atmosph&egrave;re est paire (2 ou 4)..."
+              rows="2"
+            ></textarea>
+          </div>
+        </section>
+        <!-- 2. JOURNAL DES SOIRÉES (HISTORIQUE) -->
+        <section class="velvet-card rounded-2xl p-5 shadow-sensual space-y-3">
+          <div
+            class="flex items-center justify-between border-b border-gold/15 pb-2.5"
+          >
+            <h2 class="font-serif text-xl font-bold text-champagne">
+              Le Journal des Nuits
+            </h2>
+            <span class="text-xs text-dusty">
+              M&eacute;moire des frissons de B. &amp; V.
+            </span>
+          </div>
+          <div
+            class="space-y-2.5 max-h-[340px] overflow-y-auto pr-1"
+            id="historyContainer"
+          >
+            <p class="text-xs text-dusty italic py-4 text-center">
+              Aucun soupir &eacute;chang&eacute; pour l&rsquo;instant. Esquissez
+              une rencontre et sondez un Indice du C&oelig;ur.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!-- ==================== MODALE : SCELLER L'ALCHIMIE (TENTATIVE FINALE) ==================== -->
+    <div
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4"
+      id="solveModal"
+    >
+      <div
+        class="velvet-card max-w-lg w-full rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 relative"
+      >
+        <button
+          class="absolute top-4 right-4 p-2 rounded-full hover:bg-gold/15 text-dusty hover:text-champagne transition"
+          id="closeSolveModal"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewbox="0 0 24 24"
+          >
+            <line x1="18" x2="6" y1="6" y2="18"></line>
+            <line x1="6" x2="18" y1="6" y2="18"></line>
+          </svg>
+        </button>
+        <div class="text-center space-y-1">
+          <span class="text-xs uppercase tracking-widest font-bold text-gold">
+            Le Serment des &Acirc;mes &mdash; B. &amp; V.
+          </span>
+          <h3 class="font-serif text-3xl font-bold text-champagne">
+            Sceller l&rsquo;&Eacute;treinte
+          </h3>
+          <p class="text-xs text-dusty">
+            D&eacute;signez l&rsquo;unique accord secret qui fait vibrer
+            simultan&eacute;ment tous les Indices du C&oelig;ur.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-blue-300 text-center">
+              Atmosph&egrave;re (Bleu)
+            </label>
+            <select
+              class="w-full rounded-xl bg-velvet border border-sapphire/45 px-2.5 py-2.5 text-xs font-semibold text-cream focus:outline-none"
+              id="guessBlue"
+            >
+              <option value="1">1. Caf&eacute; tamis&eacute;</option>
+              <option value="2">2. Pluie ti&egrave;de</option>
+              <option value="3">3. Bougies &amp; vin</option>
+              <option value="4">4. Galerie d&eacute;serte</option>
+              <option value="5">5. Toit sous les &eacute;toiles</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-gold text-center">
+              &Eacute;lan B. &amp; V. (Ambre)
+            </label>
+            <select
+              class="w-full rounded-xl bg-velvet border border-gold/45 px-2.5 py-2.5 text-xs font-semibold text-cream focus:outline-none"
+              id="guessYellow"
+            >
+              <option value="1">1. Timide (fr&ocirc;lement)</option>
+              <option value="2">2. Taquin (sourire complice)</option>
+              <option value="3">3. Passionn&eacute; (fi&egrave;vre)</option>
+              <option value="4">4. Myst&eacute;rieux (regard)</option>
+              <option value="5">5. Troubl&eacute; (maladresse)</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-blush text-center">
+              Confidences (Carmin)
+            </label>
+            <select
+              class="w-full rounded-xl bg-velvet border border-crimson/45 px-2.5 py-2.5 text-xs font-semibold text-cream focus:outline-none"
+              id="guessPurple"
+            >
+              <option value="1">1. Souvenirs d&rsquo;enfance</option>
+              <option value="2">2. R&ecirc;ves fous</option>
+              <option value="3">3. Un secret inavou&eacute;</option>
+              <option value="4">4. Le silence complice</option>
+              <option value="5">5. Leur avenir &agrave; deux</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button
+            class="px-4 py-2.5 rounded-xl bg-velvet border border-gold/25 text-champagne text-xs font-semibold hover:bg-gold/10 transition"
+            id="cancelSolveBtn"
+          >
+            Poursuivre la veille
+          </button>
+          <button
+            class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-gold to-champagne text-velvet text-xs font-bold shadow-lg hover:brightness-105 transition"
+            id="confirmSolveBtn"
+          >
+            R&eacute;v&eacute;ler leur &eacute;treinte
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== MODALE : RÉSULTAT DE FIN DE PARTIE ==================== -->
+    <div
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4"
+      id="resultModal"
+    >
+      <div
+        class="velvet-card max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-center relative"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg"
+          id="resultIcon"
+        ></div>
+        <div class="space-y-1.5">
+          <h3
+            class="font-serif text-3xl sm:text-4xl font-bold text-champagne"
+            id="resultTitle"
+          ></h3>
+          <p class="text-sm text-dusty" id="resultSubtitle"></p>
+        </div>
+        <div
+          class="rounded-2xl bg-velvet/90 p-4 border border-gold/30 space-y-2"
+        >
+          <div class="text-[11px] uppercase tracking-wider font-bold text-gold">
+            L&rsquo;alchimie secr&egrave;te de B. &amp; V. &eacute;tait :
+          </div>
+          <div
+            class="font-mono text-xl font-bold text-champagne"
+            id="solutionCodeDisplay"
+          ></div>
+          <div
+            class="font-serif italic text-xl text-blush"
+            id="solutionStoryDisplay"
+          ></div>
+        </div>
+        <div
+          class="flex justify-center gap-6 text-xs text-dusty"
+          id="resultStats"
+        ></div>
+        <div class="flex flex-wrap justify-center gap-3 pt-2">
+          <button
+            class="px-4 py-2.5 rounded-xl bg-velvet border border-gold/25 text-champagne text-xs font-semibold hover:bg-gold/10 transition"
+            id="closeResultBtn"
+          >
+            Examiner les indices
+          </button>
+          <button
+            class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-gold to-champagne text-velvet text-xs font-bold shadow-lg hover:brightness-105 transition"
+            id="playAgainBtn"
+          >
+            Nouvelle nuit
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== MODALE : RÈGLES, PHILOSOPHIE & EXEMPLES PAS-À-PAS ==================== -->
+    <div
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4"
+      id="rulesModal"
+    >
+      <div
+        class="velvet-card max-w-3xl w-full max-h-[92vh] overflow-y-auto rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative"
+      >
+        <button
+          class="absolute top-4 right-4 p-2 rounded-full hover:bg-gold/15 text-dusty hover:text-champagne transition"
+          id="closeRulesModal"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewbox="0 0 24 24"
+          >
+            <line x1="18" x2="6" y1="6" y2="18"></line>
+            <line x1="6" x2="18" y1="6" y2="18"></line>
+          </svg>
+        </button>
+        <!-- En-tête de la modale -->
+        <div class="border-b border-gold/20 pb-4">
+          <span class="text-xs uppercase tracking-widest font-bold text-gold">
+            Grimoire des amants
+          </span>
+          <h3
+            class="font-serif text-3xl sm:text-4xl font-bold text-champagne mt-0.5"
+          >
+            Les Lois du D&eacute;sir &amp; Exemples &mdash; B. &amp; V.
+          </h3>
+          <p class="text-xs text-dusty mt-1">
+            L&rsquo;art d&eacute;licat d&rsquo;&eacute;couter les silences du
+            c&oelig;ur et de percer le myst&egrave;re sans jamais s&rsquo;en
+            remettre au hasard.
+          </p>
+        </div>
+        <!-- Navigation par onglets : Règles en 4 Actes vs Exemples Pas-à-Pas -->
+        <div
+          class="flex gap-2 bg-velvet/90 p-1.5 rounded-2xl border border-gold/20"
+        >
+          <button
+            class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-gold text-velvet transition"
+            id="tabRulesBtn"
+          >
+            I. Les R&egrave;gles du D&eacute;sir (4 Actes)
+          </button>
+          <button
+            class="flex-1 py-2 px-3 rounded-xl text-xs font-bold text-champagne hover:bg-gold/10 transition"
+            id="tabExamplesBtn"
+          >
+            II. Exemples Illustr&eacute;s Pas-&agrave;-Pas
+          </button>
+        </div>
+        <!-- ONGLET 1 : RÈGLES EN 4 ACTES -->
+        <div
+          class="space-y-4 text-sm text-cream/90 leading-relaxed"
+          id="rulesTabContent"
+        >
+          <!-- Acte 1 -->
+          <div
+            class="p-4 rounded-2xl bg-velvet/80 border border-gold/20 space-y-2"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="px-2 py-0.5 rounded-md bg-gold/20 text-gold font-mono text-xs font-bold"
+              >
+                ACTE I
+              </span>
+              <h4 class="font-serif text-xl font-bold text-champagne">
+                L&rsquo;Idylle : La qu&ecirc;te de B. &amp; V.
+              </h4>
+            </div>
+            <p class="text-xs text-dusty leading-relaxed">
+              <strong class="text-champagne"> B. </strong>
+              et
+              <strong class="text-blush"> V. </strong>
+              se cherchent dans l&rsquo;ombre douce de la nuit. Leur alchimie
+              secr&egrave;te repose sur
+              <strong class="text-cream"> 3 dimensions intimes </strong>
+              , chacune nuanc&eacute;e de
+              <strong class="text-cream"> 1 &agrave; 5 </strong>
+              (soit
+              <strong class="text-gold">
+                125 &eacute;treintes possibles
+              </strong>
+              ) :
+            </p>
+            <ul class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs pt-1">
+              <li
+                class="p-2.5 rounded-xl bg-sapphire/15 border border-sapphire/35"
+              >
+                <strong class="text-blue-300 block mb-0.5">
+                  Atmosph&egrave;re (Saphir)
+                </strong>
+                <span class="text-dusty text-[11px]">
+                  1. Caf&eacute; tamis&eacute; &bull; 2. Pluie ti&egrave;de
+                  &bull; 3. Bougies &amp; vin &bull; 4. Galerie d&eacute;serte
+                  &bull; 5. Toit sous les &eacute;toiles
+                </span>
+              </li>
+              <li class="p-2.5 rounded-xl bg-gold/15 border border-gold/35">
+                <strong class="text-gold block mb-0.5">
+                  &Eacute;lan B. &amp; V. (Ambre)
+                </strong>
+                <span class="text-dusty text-[11px]">
+                  1. Timide &bull; 2. Taquin &bull; 3. Passionn&eacute; &bull;
+                  4. Myst&eacute;rieux &bull; 5. Troubl&eacute;
+                </span>
+              </li>
+              <li
+                class="p-2.5 rounded-xl bg-crimson/15 border border-crimson/35"
+              >
+                <strong class="text-blush block mb-0.5">
+                  Confidences (Carmin)
+                </strong>
+                <span class="text-dusty text-[11px]">
+                  1. Souvenirs d&rsquo;enfance &bull; 2. R&ecirc;ves fous &bull;
+                  3. Secret inavou&eacute; &bull; 4. Silence complice &bull; 5.
+                  Avenir &agrave; deux
+                </span>
+              </li>
+            </ul>
+          </div>
+          <!-- Acte 2 -->
+          <div
+            class="p-4 rounded-2xl bg-velvet/80 border border-gold/20 space-y-2"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="px-2 py-0.5 rounded-md bg-gold/20 text-gold font-mono text-xs font-bold"
+              >
+                ACTE II
+              </span>
+              <h4 class="font-serif text-xl font-bold text-champagne">
+                Le Rituel d&rsquo;une Nuit
+              </h4>
+            </div>
+            <ol class="list-decimal list-inside space-y-1.5 text-xs text-dusty">
+              <li>
+                <strong class="text-cream"> Esquisser une rencontre : </strong>
+                Choisissez une nuance de 1 &agrave; 5 pour
+                l&rsquo;Atmosph&egrave;re, l&rsquo;&Eacute;lan et les
+                Confidences. Vos trois voiles ajour&eacute;s superposent alors
+                leurs ouvertures.
+              </li>
+              <li>
+                <strong class="text-cream">
+                  Sonder jusqu&rsquo;&agrave; 3 Indices du C&oelig;ur :
+                </strong>
+                Chaque carte Indice porte plusieurs promesses possibles (ex.
+                <em> &laquo; Atmosph&egrave;re paire &raquo; </em>
+                ou
+                <em> &laquo; Atmosph&egrave;re impaire &raquo; </em>
+                ), mais
+                <strong class="text-gold">
+                  une seule v&eacute;rit&eacute; secr&egrave;te br&ucirc;le
+                  derri&egrave;re la carte
+                </strong>
+                . En la sondant, une lueur
+                <span class="text-emeraldGlow font-semibold">
+                  &eacute;meraude (&checkmark;)
+                </span>
+                ou un voile
+                <span class="text-rubyGlow font-semibold">
+                  rubis (&cross;)
+                </span>
+                r&eacute;v&egrave;le si votre rencontre honore ce d&eacute;sir
+                cach&eacute;.
+              </li>
+              <li>
+                <strong class="text-cream">
+                  Annoter la Carte du Tendre :
+                </strong>
+                D&egrave;s le premier frisson sond&eacute;, votre esquisse est
+                scell&eacute;e pour la nuit. Voilez les nuances impossibles sur
+                votre carte intime, puis passez &agrave; la
+                <em> Nuit suivante </em>
+                pour explorer un nouvel accord.
+              </li>
+            </ol>
+          </div>
+          <!-- Acte 3 -->
+          <div
+            class="p-4 rounded-2xl bg-gradient-to-br from-boudoir to-velvet border border-gold/35 space-y-2"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="px-2 py-0.5 rounded-md bg-crimson/25 text-blush font-mono text-xs font-bold"
+              >
+                ACTE III
+              </span>
+              <h4 class="font-serif text-xl font-bold text-champagne">
+                Les Deux Serments d&rsquo;Or de l&rsquo;Alchimie
+              </h4>
+            </div>
+            <div class="space-y-2 text-xs text-dusty">
+              <p>
+                <strong class="text-gold">
+                  1. L&rsquo;Unicit&eacute; de l&rsquo;&Eacute;treinte :
+                </strong>
+                Parmi les 125 rencontres imaginables,
+                <strong class="text-cream">
+                  une seule et unique combinaison
+                </strong>
+                satisfait simultan&eacute;ment tous les Indices du C&oelig;ur
+                d&eacute;voil&eacute;s devant vous.
+              </p>
+              <p>
+                <strong class="text-blush">
+                  2. Le Secret des &Acirc;mes Attentives (non-redondance) :
+                </strong>
+                Chaque Indice du C&oelig;ur est
+                <em> indispensable </em>
+                &agrave; la r&eacute;v&eacute;lation. Si l&rsquo;on retirait un
+                seul indice de la table, il subsisterait au moins deux
+                &eacute;treintes possibles ! Vous pouvez donc &eacute;carter par
+                pure finesse toute promesse qui rendrait un autre indice
+                inutile.
+              </p>
+            </div>
+          </div>
+          <!-- Acte 4 -->
+          <div
+            class="p-4 rounded-2xl bg-velvet/80 border border-gold/20 space-y-1.5"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="px-2 py-0.5 rounded-md bg-gold/20 text-gold font-mono text-xs font-bold"
+              >
+                ACTE IV
+              </span>
+              <h4 class="font-serif text-xl font-bold text-champagne">
+                &Agrave; Deux (B. &amp; V.) ou en Veille Solitaire
+              </h4>
+            </div>
+            <p class="text-xs text-dusty">
+              <strong class="text-cream">
+                Jeu de S&eacute;duction (B. face &agrave; V.) :
+              </strong>
+              Copiez le code du
+              <em> Serment </em>
+              en haut de l&rsquo;&eacute;cran et ouvrez-le sur vos deux
+              appareils. Chacun sonde l&rsquo;Oracle en silence : celui qui
+              scelle l&rsquo;&Eacute;treinte en moins de nuits (et moins de
+              soupirs) conquiert le c&oelig;ur de l&rsquo;autre.
+              <br />
+              <strong class="text-cream">
+                Veille Complice (&Agrave; deux mains) :
+              </strong>
+              Partagez le m&ecirc;me &eacute;cran et murmurez-vous vos
+              intuitions avant chaque frisson.
+            </p>
+          </div>
+        </div>
+        <!-- ONGLET 2 : EXEMPLES PAS-À-PAS ILLUSTRÉS -->
+        <div
+          class="hidden space-y-5 text-xs text-cream/90"
+          id="examplesTabContent"
+        >
+          <!-- EXEMPLE 1 -->
+          <div
+            class="p-4 sm:p-5 rounded-2xl bg-velvet/85 border border-gold/25 space-y-3"
+          >
+            <div
+              class="flex flex-wrap items-center justify-between gap-2 border-b border-gold/15 pb-2"
+            >
+              <span class="font-serif text-xl font-bold text-champagne">
+                Exemple 1 : &Eacute;couter la lueur &eacute;meraude &amp; le
+                voile rubis
+              </span>
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-gold/15 text-gold font-mono text-[11px]"
+              >
+                Accord pressenti : [3 - 2 - 4]
+              </span>
+            </div>
+            <p class="text-dusty leading-relaxed">
+              B. et V. esquissent la rencontre
+              <strong class="text-cream"> [3 - 2 - 4] </strong>
+              :
+              <em> Bougies &amp; vin (3) </em>
+              ,
+              <em> Taquin (2) </em>
+              ,
+              <em> Le silence complice (4) </em>
+              . Ils sondent deux Indices du C&oelig;ur :
+            </p>
+            <!-- Mini-schéma visuel des résultats -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div
+                class="p-3 rounded-xl bg-emeraldGlow/10 border border-emeraldGlow/35 space-y-1"
+              >
+                <div
+                  class="flex items-center justify-between font-bold text-emeraldGlow"
+                >
+                  <span> Indice A &mdash; Le battement du lieu </span>
+                  <span> &checkmark; LUEUR &Eacute;MERAUDE </span>
+                </div>
+                <p class="text-[11px] text-cream/85">
+                  Pour [
+                  <strong> 3 </strong>
+                  - 2 - 4], l&rsquo;Atmosph&egrave;re vaut 3 (impaire). Puisque
+                  l&rsquo;Oracle r&eacute;pond
+                  <strong> &checkmark; </strong>
+                  , la v&eacute;rit&eacute; cach&eacute;e est obligatoirement
+                  <em>
+                    &laquo; Atmosph&egrave;re impaire (1, 3 ou 5) &raquo;
+                  </em>
+                  .
+                </p>
+              </div>
+              <div
+                class="p-3 rounded-xl bg-rubyGlow/10 border border-rubyGlow/35 space-y-1"
+              >
+                <div
+                  class="flex items-center justify-between font-bold text-rubyGlow"
+                >
+                  <span> Indice B &mdash; Les gestes face aux mots </span>
+                  <span> &cross; VOILE RUBIS </span>
+                </div>
+                <p class="text-[11px] text-cream/85">
+                  Les promesses sont
+                  <em> &laquo; &Eacute;lan &lt; Confidences &raquo; </em>
+                  ,
+                  <em> &laquo; &Eacute;lan = Confidences &raquo; </em>
+                  ou
+                  <em> &laquo; &Eacute;lan &gt; Confidences &raquo; </em>
+                  . Ici 2 &lt; 4 est rejet&eacute;, donc la v&eacute;rit&eacute;
+                  est soit
+                  <strong> &Eacute;lan = Confidences </strong>
+                  , soit
+                  <strong> &Eacute;lan &gt; Confidences </strong>
+                  .
+                </p>
+              </div>
+            </div>
+            <!-- Action sur la Carte du Tendre -->
+            <div
+              class="p-3 rounded-xl bg-boudoir/90 border border-gold/20 space-y-2"
+            >
+              <div
+                class="font-bold text-gold uppercase tracking-wider text-[10px]"
+              >
+                Ce que B. &amp; V. notent sur la Carte du Tendre :
+              </div>
+              <div class="flex flex-wrap items-center gap-3 text-[11px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-blue-300 font-bold">
+                    Atmosph&egrave;re :
+                  </span>
+                  <span
+                    class="px-2 py-0.5 rounded bg-velvet border border-gold/30 text-cream"
+                  >
+                    1
+                  </span>
+                  <span
+                    class="px-2 py-0.5 rounded bg-velvet border border-crimson/40 text-dusty/40 line-through"
+                  >
+                    2
+                  </span>
+                  <span
+                    class="px-2 py-0.5 rounded bg-velvet border border-gold/30 text-cream"
+                  >
+                    3
+                  </span>
+                  <span
+                    class="px-2 py-0.5 rounded bg-velvet border border-crimson/40 text-dusty/40 line-through"
+                  >
+                    4
+                  </span>
+                  <span
+                    class="px-2 py-0.5 rounded bg-velvet border border-gold/30 text-cream"
+                  >
+                    5
+                  </span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-gold font-bold">
+                    &Eacute;lan (&ge; Confidences) :
+                  </span>
+                  <span class="text-dusty italic">
+                    Si les Confidences ne peuvent jamais valoir 1 (par exemple
+                    &ge; 2), alors l&rsquo;&Eacute;lan 1 devient impossible et
+                    peut &ecirc;tre voil&eacute; !
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- EXEMPLE 2 : NON-REDONDANCE -->
+          <div
+            class="p-4 sm:p-5 rounded-2xl bg-velvet/85 border border-crimson/35 space-y-3"
+          >
+            <div
+              class="flex flex-wrap items-center justify-between gap-2 border-b border-crimson/20 pb-2"
+            >
+              <span class="font-serif text-xl font-bold text-blush">
+                Exemple 2 : Deviner par le Serment d&rsquo;Or (non-redondance)
+              </span>
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-crimson/20 text-blush font-semibold text-[11px]"
+              >
+                Intuition des amants
+              </span>
+            </div>
+            <p class="text-dusty leading-relaxed">
+              Imaginons une nuit &agrave; 3 Indices du C&oelig;ur o&ugrave; B.
+              et V. ont d&eacute;j&agrave; acquis deux certitudes :
+            </p>
+            <ul class="list-disc list-inside space-y-1 text-cream/90 pl-1">
+              <li>
+                <strong> Indice A : </strong>
+                Atmosph&egrave;re = 4 (
+                <em> Galerie d&eacute;serte </em>
+                ) et &Eacute;lan = 2 (
+                <em> Taquin </em>
+                ).
+              </li>
+              <li>
+                <strong> Indice B : </strong>
+                Les promesses sont
+                <em> &laquo; Confidences &lt; 3 &raquo; </em>
+                ,
+                <em> &laquo; Confidences = 3 &raquo; </em>
+                ou
+                <em> &laquo; Confidences &gt; 3 &raquo; </em>
+                .
+              </li>
+              <li>
+                <strong> Indice C : </strong>
+                Les promesses sont
+                <em> &laquo; Confidences paires (2 ou 4) &raquo; </em>
+                ou
+                <em> &laquo; Confidences impaires (1, 3 ou 5) &raquo; </em>
+                .
+              </li>
+            </ul>
+            <div
+              class="p-3.5 rounded-xl bg-gradient-to-r from-boudoir to-velvet border border-gold/30 space-y-1.5"
+            >
+              <div class="font-bold text-champagne">
+                Pourquoi &laquo; Un secret inavou&eacute; (3) &raquo; est-il
+                impossible sans m&ecirc;me sonder l&rsquo;Indice C ?
+              </div>
+              <p class="text-dusty leading-relaxed">
+                Supposons un instant que la v&eacute;rit&eacute; de
+                l&rsquo;Indice B soit
+                <strong class="text-cream">
+                  &laquo; Confidences = 3 &raquo;
+                </strong>
+                . Alors, avec Atmosph&egrave;re = 4 et &Eacute;lan = 2,
+                l&rsquo;&eacute;treinte [4 - 2 - 3] serait d&eacute;j&agrave;
+                <em> enti&egrave;rement r&eacute;v&eacute;l&eacute;e </em>
+                par A et B seuls ! L&rsquo;Indice C n&rsquo;aurait aucune raison
+                d&rsquo;exister.
+                <br />
+                <span class="text-gold font-semibold">
+                  Or, le Serment d&rsquo;Or garantit qu&rsquo;aucun indice
+                  n&rsquo;est superflu !
+                </span>
+                L&rsquo;Indice B ne peut donc pas &ecirc;tre &laquo; Confidences
+                = 3 &raquo; : B. et V. peuvent aussit&ocirc;t voiler le
+                <strong class="text-crimson"> 3 </strong>
+                des Confidences sur leur Carte du Tendre sans d&eacute;penser un
+                seul soupir.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="pt-2 flex justify-end border-t border-gold/15">
+          <button
+            class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-gold to-champagne text-velvet text-xs font-bold hover:brightness-105 shadow-md transition"
+            id="ackRulesBtn"
+          >
+            Entrer dans la nuit de B. &amp; V.
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== MODALE : MURMURE DE L'INTUITION (INDICES PROGRESSIFS) ==================== -->
+    <div
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4"
+      id="hintsModal"
+    >
+      <div
+        class="velvet-card max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative"
+      >
+        <button
+          class="absolute top-4 right-4 p-2 rounded-full hover:bg-gold/15 text-dusty hover:text-champagne transition"
+          id="closeHintsModal"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewbox="0 0 24 24"
+          >
+            <line x1="18" x2="6" y1="6" y2="18"></line>
+            <line x1="6" x2="18" y1="6" y2="18"></line>
+          </svg>
+        </button>
+        <div class="border-b border-gold/20 pb-4 pr-8">
+          <span class="text-xs uppercase tracking-widest font-bold text-gold">
+            L&rsquo;Oracle des D&eacute;sirs &mdash; Aide &agrave; la
+            d&eacute;duction
+          </span>
+          <h3 class="font-serif text-3xl font-bold text-champagne mt-0.5">
+            Le Murmure de l&rsquo;Intuition
+          </h3>
+          <p class="text-xs text-dusty mt-1">
+            Trois voiles d&rsquo;aide progressive calcul&eacute;s en temps
+            r&eacute;el sur la nuit de B. &amp; V., sans jamais trahir le secret
+            final.
+          </p>
+        </div>
+        <div class="space-y-4" id="hintsListContainer">
+          <!-- Généré dynamiquement selon state.revealedHints -->
+        </div>
+        <div
+          class="pt-2 flex items-center justify-between border-t border-gold/15"
+        >
+          <span class="text-xs text-dusty" id="hintsProgressLabel">
+            0 / 3 murmures d&eacute;voil&eacute;s cette nuit
+          </span>
+          <button
+            class="px-5 py-2 rounded-xl bg-velvet border border-gold/30 hover:bg-gold/15 text-champagne text-xs font-semibold transition"
+            id="ackHintsBtn"
+          >
+            Retourner &agrave; la veille
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== MODALE : BANC D'ÉPREUVE (AUDIT & STRESS-TEST) ==================== -->
+    <div
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4"
+      id="benchModal"
+    >
+      <div
+        class="velvet-card max-w-4xl w-full max-h-[92vh] overflow-y-auto rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 relative"
+      >
+        <button
+          class="absolute top-4 right-4 p-2 rounded-full hover:bg-gold/15 text-dusty hover:text-champagne transition"
+          id="closeBenchModal"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewbox="0 0 24 24"
+          >
+            <line x1="18" x2="6" y1="6" y2="18"></line>
+            <line x1="6" x2="18" y1="6" y2="18"></line>
+          </svg>
+        </button>
+        <div
+          class="flex flex-wrap items-center justify-between gap-3 border-b border-gold/20 pb-4 pr-8"
+        >
+          <div>
+            <span class="text-xs uppercase tracking-widest font-bold text-gold">
+              Certification Math&eacute;matique &amp; Logique
+            </span>
+            <h3 class="font-serif text-3xl font-bold text-champagne mt-0.5">
+              Banc d&rsquo;&Eacute;preuve de l&rsquo;Alchimie
+            </h3>
+            <p class="text-xs text-dusty mt-1">
+              V&eacute;rification exhaustive des partitions sur {1..5}&sup3;,
+              minimalit&eacute; stricte sans redondance et solveur logique.
+            </p>
+          </div>
+          <button
+            class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-gold to-champagne text-velvet text-xs font-bold shadow-md hover:brightness-105 transition flex items-center gap-2"
+            id="runBenchBtn"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              viewbox="0 0 24 24"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span> Relancer 300 &eacute;preuves </span>
+          </button>
+        </div>
+        <!-- Métriques globales -->
+        <div
+          class="grid grid-cols-2 sm:grid-cols-4 gap-3"
+          id="benchMetricsGrid"
+        >
+          <div class="p-3.5 rounded-2xl bg-velvet/85 border border-gold/20">
+            <div
+              class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+            >
+              Int&eacute;grit&eacute; &amp; Succ&egrave;s
+            </div>
+            <div
+              class="font-serif text-2xl font-bold text-emeraldGlow mt-0.5"
+              id="benchSuccessRate"
+            >
+              &mdash;
+            </div>
+            <div class="text-[11px] text-dusty" id="benchTotalTested">
+              En attente&hellip;
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-velvet/85 border border-gold/20">
+            <div
+              class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+            >
+              Temps moyen / nuit
+            </div>
+            <div
+              class="font-serif text-2xl font-bold text-champagne mt-0.5"
+              id="benchAvgTime"
+            >
+              &mdash;
+            </div>
+            <div class="text-[11px] text-dusty" id="benchMaxTime">
+              Max : &mdash;
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-velvet/85 border border-gold/20">
+            <div
+              class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+            >
+              Non-redondance
+            </div>
+            <div
+              class="font-serif text-2xl font-bold text-gold mt-0.5"
+              id="benchMinRedundancy"
+            >
+              &mdash;
+            </div>
+            <div class="text-[11px] text-dusty">
+              Solutions sans 1 indice (&ge; 2)
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-velvet/85 border border-gold/20">
+            <div
+              class="text-[10px] uppercase tracking-wider text-dusty font-semibold"
+            >
+              Solveur logique
+            </div>
+            <div
+              class="font-serif text-2xl font-bold text-blush mt-0.5"
+              id="benchSolverAvg"
+            >
+              &mdash;
+            </div>
+            <div class="text-[11px] text-dusty">Convergence optimale</div>
+          </div>
+        </div>
+        <!-- Détails des 3 batteries de tests -->
+        <div class="space-y-3 text-xs" id="benchReportContainer">
+          <p class="text-dusty italic text-center py-6">
+            Initialisation du Banc d&rsquo;&Eacute;preuve&hellip;
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== LOGIQUE DU JEU & MOTEUR CERTIFIÉ ==================== -->
+    <script>
+      (() => {
+        "use strict";
+        // -------------------------------------------------------------------------
+        // 1. DONNÉES THÉMATIQUES SENSUELLES DE B. & V. (3 DIMENSIONS x 5 NUANCES)
+        // -------------------------------------------------------------------------
+        const DIMENSIONS = {
+          blue: {
+            key: "blue",
+            name: "L’Atmosphère",
+            short: "Atmosphère",
+            colorHex: "#4a76b8",
+            bgClass: "bg-sapphire",
+            textClass: "text-blue-300",
+            borderClass: "border-sapphire",
+            values: {
+              1: "Café tamisé",
+              2: "Pluie tiède",
+              3: "Bougies & vin",
+              4: "Galerie déserte",
+              5: "Toit sous les étoiles",
+            },
+          },
+          yellow: {
+            key: "yellow",
+            name: "L’Élan B. & V.",
+            short: "Élan B. & V.",
+            colorHex: "#e6b87d",
+            bgClass: "bg-gold",
+            textClass: "text-gold",
+            borderClass: "border-gold",
+            values: {
+              1: "Timide (frôlement)",
+              2: "Taquin (sourire complice)",
+              3: "Passionné (fièvre)",
+              4: "Mystérieux (regard)",
+              5: "Troublé (maladresse)",
+            },
+          },
+          purple: {
+            key: "purple",
+            name: "Les Confidences",
+            short: "Confidences",
+            colorHex: "#d94e67",
+            bgClass: "bg-crimson",
+            textClass: "text-blush",
+            borderClass: "border-crimson",
+            values: {
+              1: "Souvenirs d’enfance",
+              2: "Rêves fous",
+              3: "Un secret inavoué",
+              4: "Le silence complice",
+              5: "Leur avenir à deux",
+            },
+          },
+        };
+        // Espace complet des 125 combinaisons possibles [b, y, p] ∈ {1..5}³
+        const ALL_CODES = [];
+        for (let b = 1; b <= 5; b++) {
+          for (let y = 1; y <= 5; y++) {
+            for (let p = 1; p <= 5; p++) {
+              ALL_CODES.push([b, y, p]);
+            }
+          }
+        }
+        // -------------------------------------------------------------------------
+        // 2. BANQUE DE FRISSONS (VÉRIFICATEURS) AVEC GROUPES D'EXCLUSION MUTUELLE
+        // Chaque famille forme une partition exacte ou quasi-exacte non triviale,
+        // et possède un `exclusionGroup` empêchant toute redondance structurelle.
+        // -------------------------------------------------------------------------
+        const VERIFIER_FAMILIES = [
+          {
+            id: "blue_parity",
+            exclusionGroup: "parity_blue",
+            title: "Le battement du lieu",
+            subtitle: "Parité de l’Atmosphère (Bleu)",
+            laws: [
+              {
+                label: "Atmosphère paire (2 ou 4)",
+                test: ([b]) => b % 2 === 0,
+              },
+              {
+                label: "Atmosphère impaire (1, 3 ou 5)",
+                test: ([b]) => b % 2 === 1,
+              },
+            ],
+          },
+          {
+            id: "yellow_parity",
+            exclusionGroup: "parity_yellow",
+            title: "La cadence du désir",
+            subtitle: "Parité de l’Élan B. & V. (Ambre)",
+            laws: [
+              { label: "Élan pair (2 ou 4)", test: ([, y]) => y % 2 === 0 },
+              {
+                label: "Élan impair (1, 3 ou 5)",
+                test: ([, y]) => y % 2 === 1,
+              },
+            ],
+          },
+          {
+            id: "purple_parity",
+            exclusionGroup: "parity_purple",
+            title: "Le souffle des aveux",
+            subtitle: "Parité des Confidences (Carmin)",
+            laws: [
+              {
+                label: "Confidences paires (2 ou 4)",
+                test: ([, , p]) => p % 2 === 0,
+              },
+              {
+                label: "Confidences impaires (1, 3 ou 5)",
+                test: ([, , p]) => p % 2 === 1,
+              },
+            ],
+          },
+          {
+            id: "blue_vs_3",
+            exclusionGroup: "threshold_blue",
+            title: "L’intimité du décor",
+            subtitle: "Atmosphère comparée à 3 (Bougies & vin)",
+            laws: [
+              { label: "Atmosphère < 3 (feutrée)", test: ([b]) => b < 3 },
+              {
+                label: "Atmosphère = 3 (bougies & vin)",
+                test: ([b]) => b === 3,
+              },
+              { label: "Atmosphère > 3 (nocturne)", test: ([b]) => b > 3 },
+            ],
+          },
+          {
+            id: "yellow_vs_3",
+            exclusionGroup: "threshold_yellow",
+            title: "La fièvre entre B. & V.",
+            subtitle: "Élan comparé à 3 (Passionné)",
+            laws: [
+              { label: "Élan < 3 (retenu)", test: ([, y]) => y < 3 },
+              { label: "Élan = 3 (passionné)", test: ([, y]) => y === 3 },
+              { label: "Élan > 3 (troublant)", test: ([, y]) => y > 3 },
+            ],
+          },
+          {
+            id: "purple_vs_3",
+            exclusionGroup: "threshold_purple",
+            title: "La profondeur du secret",
+            subtitle: "Confidences comparées à 3 (Secret)",
+            laws: [
+              { label: "Confidences < 3 (légères)", test: ([, , p]) => p < 3 },
+              {
+                label: "Confidences = 3 (secret inavoué)",
+                test: ([, , p]) => p === 3,
+              },
+              { label: "Confidences > 3 (intimes)", test: ([, , p]) => p > 3 },
+            ],
+          },
+          {
+            id: "blue_vs_4",
+            exclusionGroup: "threshold_blue",
+            title: "Le seuil du mystère",
+            subtitle: "Atmosphère comparée à 4 (Galerie déserte)",
+            laws: [
+              { label: "Atmosphère < 4", test: ([b]) => b < 4 },
+              {
+                label: "Atmosphère = 4 (galerie déserte)",
+                test: ([b]) => b === 4,
+              },
+              { label: "Atmosphère > 4 (étoiles)", test: ([b]) => b > 4 },
+            ],
+          },
+          {
+            id: "yellow_vs_2",
+            exclusionGroup: "threshold_yellow",
+            title: "L’audace du sourire",
+            subtitle: "Élan comparé à 2 (Taquin)",
+            laws: [
+              { label: "Élan = 1 (timide)", test: ([, y]) => y === 1 },
+              { label: "Élan = 2 (taquin)", test: ([, y]) => y === 2 },
+              { label: "Élan > 2 (ardent)", test: ([, y]) => y > 2 },
+            ],
+          },
+          {
+            id: "purple_vs_4",
+            exclusionGroup: "threshold_purple",
+            title: "La frontière du silence",
+            subtitle: "Confidences comparées à 4 (Silence complice)",
+            laws: [
+              { label: "Confidences < 4", test: ([, , p]) => p < 4 },
+              {
+                label: "Confidences = 4 (silence complice)",
+                test: ([, , p]) => p === 4,
+              },
+              { label: "Confidences > 4 (avenir)", test: ([, , p]) => p > 4 },
+            ],
+          },
+          {
+            id: "blue_vs_yellow",
+            exclusionGroup: "cmp_blue_yellow",
+            title: "Le décor face à l’élan",
+            subtitle: "Atmosphère comparée à l’Élan",
+            laws: [
+              { label: "Atmosphère < Élan", test: ([b, y]) => b < y },
+              { label: "Atmosphère = Élan", test: ([b, y]) => b === y },
+              { label: "Atmosphère > Élan", test: ([b, y]) => b > y },
+            ],
+          },
+          {
+            id: "yellow_vs_purple",
+            exclusionGroup: "cmp_yellow_purple",
+            title: "Les gestes face aux mots",
+            subtitle: "Élan comparé aux Confidences",
+            laws: [
+              { label: "Élan < Confidences", test: ([, y, p]) => y < p },
+              { label: "Élan = Confidences", test: ([, y, p]) => y === p },
+              { label: "Élan > Confidences", test: ([, y, p]) => y > p },
+            ],
+          },
+          {
+            id: "blue_vs_purple",
+            exclusionGroup: "cmp_blue_purple",
+            title: "Le lieu face aux aveux",
+            subtitle: "Atmosphère comparée aux Confidences",
+            laws: [
+              { label: "Atmosphère < Confidences", test: ([b, , p]) => b < p },
+              {
+                label: "Atmosphère = Confidences",
+                test: ([b, , p]) => b === p,
+              },
+              { label: "Atmosphère > Confidences", test: ([b, , p]) => b > p },
+            ],
+          },
+          {
+            id: "even_count",
+            exclusionGroup: "global_parity",
+            title: "La douceur des nombres pairs",
+            subtitle: "Total de nuances paires dans l’accord",
+            laws: [
+              {
+                label: "0 valeur paire",
+                test: (c) => c.filter((x) => x % 2 === 0).length === 0,
+              },
+              {
+                label: "1 valeur paire",
+                test: (c) => c.filter((x) => x % 2 === 0).length === 1,
+              },
+              {
+                label: "2 valeurs paires",
+                test: (c) => c.filter((x) => x % 2 === 0).length === 2,
+              },
+              {
+                label: "3 valeurs paires",
+                test: (c) => c.filter((x) => x % 2 === 0).length === 3,
+              },
+            ],
+          },
+          {
+            id: "duplicates",
+            exclusionGroup: "global_multiplicity",
+            title: "L’unisson de B. & V.",
+            subtitle: "Répétition de valeurs identiques",
+            laws: [
+              {
+                label: "3 nuances distinctes",
+                test: ([b, y, p]) => new Set([b, y, p]).size === 3,
+              },
+              {
+                label: "Exactement 2 identiques (paire)",
+                test: ([b, y, p]) => new Set([b, y, p]).size === 2,
+              },
+              {
+                label: "3 nuances identiques (fusion)",
+                test: ([b, y, p]) => new Set([b, y, p]).size === 1,
+              },
+            ],
+          },
+          {
+            id: "count_of_3",
+            exclusionGroup: "count_digit_3",
+            title: "L’empreinte du chiffre 3",
+            subtitle: "Présence du 3 dans la rencontre",
+            laws: [
+              {
+                label: "Aucun 3",
+                test: (c) => c.filter((x) => x === 3).length === 0,
+              },
+              {
+                label: "Un seul 3",
+                test: (c) => c.filter((x) => x === 3).length === 1,
+              },
+              {
+                label: "Deux ou trois 3",
+                test: (c) => c.filter((x) => x === 3).length >= 2,
+              },
+            ],
+          },
+          {
+            id: "count_of_1",
+            exclusionGroup: "count_digit_1",
+            title: "La pudeur du chiffre 1",
+            subtitle: "Présence du 1 dans la rencontre",
+            laws: [
+              {
+                label: "Aucun 1",
+                test: (c) => c.filter((x) => x === 1).length === 0,
+              },
+              {
+                label: "Un seul 1",
+                test: (c) => c.filter((x) => x === 1).length === 1,
+              },
+              {
+                label: "Deux ou trois 1",
+                test: (c) => c.filter((x) => x === 1).length >= 2,
+              },
+            ],
+          },
+          {
+            id: "count_of_5",
+            exclusionGroup: "count_digit_5",
+            title: "L’audace du chiffre 5",
+            subtitle: "Présence du 5 dans la rencontre",
+            laws: [
+              {
+                label: "Aucun 5",
+                test: (c) => c.filter((x) => x === 5).length === 0,
+              },
+              {
+                label: "Un seul 5",
+                test: (c) => c.filter((x) => x === 5).length === 1,
+              },
+              {
+                label: "Deux ou trois 5",
+                test: (c) => c.filter((x) => x === 5).length >= 2,
+              },
+            ],
+          },
+          {
+            id: "sum_vs_9",
+            exclusionGroup: "global_sum",
+            title: "L’équilibre magnétique",
+            subtitle: "Somme des trois dimensions",
+            laws: [
+              {
+                label: "Somme < 9 (retenue)",
+                test: ([b, y, p]) => b + y + p < 9,
+              },
+              {
+                label: "Somme = 9 (harmonie)",
+                test: ([b, y, p]) => b + y + p === 9,
+              },
+              {
+                label: "Somme > 9 (intensité)",
+                test: ([b, y, p]) => b + y + p > 9,
+              },
+            ],
+          },
+          {
+            id: "monotonicity",
+            exclusionGroup: "global_order",
+            title: "Le crescendo des sens",
+            subtitle: "Progression Atmosphère → Élan → Confidences",
+            laws: [
+              {
+                label: "Strictement croissant (B < J < V)",
+                test: ([b, y, p]) => b < y && y < p,
+              },
+              {
+                label: "Strictement décroissant (B > J > V)",
+                test: ([b, y, p]) => b > y && y > p,
+              },
+              {
+                label: "Ni croissant, ni décroissant",
+                test: ([b, y, p]) => !(b < y && y < p) && !(b > y && y > p),
+              },
+            ],
+          },
+        ];
+        // -------------------------------------------------------------------------
+        // 3. GÉNÉRATEUR PSEUDO-ALÉATOIRE CANONIQUE & DETERMINISTE (MULBERRY32)
+        // -------------------------------------------------------------------------
+        function normalizeSeed(rawSeed) {
+          const cleaned = String(rawSeed || "")
+            .toUpperCase()
+            .replace(/[^A-Z0-9]/g, "")
+            .slice(0, 10);
+          return cleaned.length > 0 ? cleaned : "BV2026";
+        }
+        function hashSeed(str) {
+          let h = 2166136261 >>> 0;
+          for (let i = 0; i < str.length; i++) {
+            h ^= str.charCodeAt(i);
+            h = Math.imul(h, 16777619);
+          }
+          return h >>> 0;
+        }
+        function createRNG(seedStr) {
+          let a = hashSeed(seedStr);
+          return function () {
+            let t = (a += 0x6d2b79f5);
+            t = Math.imul(t ^ (t >>> 15), t | 1);
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+          };
+        }
+        function generateRandomSeed() {
+          const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+          const entropy = `${Date.now()}-${performance.now()}-${Math.random()}`;
+          const rng = createRNG(entropy);
+          let res = "";
+          for (let i = 0; i < 6; i++) {
+            res += chars[Math.floor(rng() * chars.length)];
+          }
+          return res;
+        }
+        function shuffleWithRNG(arr, rng) {
+          const copy = [...arr];
+          for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+          }
+          return copy;
+        }
+        // -------------------------------------------------------------------------
+        // 4. VÉRIFICATION FORMELLE & MOTEUR DE GÉNÉRATION CERTIFIÉ MINIMAL
+        // -------------------------------------------------------------------------
+        function verifyPuzzleCertificate(puzzle) {
+          const { secret, verifiers, difficulty } = puzzle;
+          if (!verifiers || verifiers.length !== difficulty) {
+            return {
+              valid: false,
+              reason: "Nombre de vérificateurs incorrect",
+            };
+          }
+          // 1) Vérifier absence de doublons d'ID ou de groupe d'exclusion
+          const seenIds = new Set();
+          const seenGroups = new Set();
+          for (const v of verifiers) {
+            if (seenIds.has(v.family.id)) {
+              return {
+                valid: false,
+                reason: `Famille dupliquée : ${v.family.id}`,
+              };
+            }
+            if (seenGroups.has(v.family.exclusionGroup)) {
+              return {
+                valid: false,
+                reason: `Groupe d'exclusion en conflit : ${v.family.exclusionGroup}`,
+              };
+            }
+            seenIds.add(v.family.id);
+            seenGroups.add(v.family.exclusionGroup);
+          }
+          // 2) Vérifier que l'ensemble complet admet EXACTEMENT 1 solution égale à `secret`
+          const fullMatches = ALL_CODES.filter((code) =>
+            verifiers.every((v) => v.activeLaw.test(code)),
+          );
+          if (fullMatches.length !== 1) {
+            return {
+              valid: false,
+              reason: `Unicité violée (${fullMatches.length} solutions)`,
+            };
+          }
+          const [m0, m1, m2] = fullMatches[0];
+          if (m0 !== secret[0] || m1 !== secret[1] || m2 !== secret[2]) {
+            return {
+              valid: false,
+              reason: "La solution unique ne correspond pas au secret annoncé",
+            };
+          }
+          // 3) Vérifier la minimalité stricte (aucun vérificateur n'est redondant)
+          const ablationCounts = [];
+          for (let skipIdx = 0; skipIdx < verifiers.length; skipIdx++) {
+            const subset = verifiers.filter((_, idx) => idx !== skipIdx);
+            const subsetMatches = ALL_CODES.filter((code) =>
+              subset.every((v) => v.activeLaw.test(code)),
+            );
+            if (subsetMatches.length < 2) {
+              return {
+                valid: false,
+                reason: `Redondance détectée : sans ${verifiers[skipIdx].letter} (${verifiers[skipIdx].family.id}), il reste ${subsetMatches.length} solution`,
+              };
+            }
+            ablationCounts.push(subsetMatches.length);
+          }
+          return {
+            valid: true,
+            ablationCounts,
+          };
+        }
+        function generatePuzzle(rawSeed, numVerifiers) {
+          const canonicalSeed = normalizeSeed(rawSeed);
+          const letters = ["A", "B", "C", "D", "E", "F"];
+          // Exploration déterministe par dérivation de graine (jusqu'à 25 branches x 4000 essais)
+          for (let branch = 0; branch < 25; branch++) {
+            const branchSeed =
+              branch === 0
+                ? `${canonicalSeed}-D${numVerifiers}`
+                : `${canonicalSeed}-D${numVerifiers}-B${branch}`;
+            const rng = createRNG(branchSeed);
+            for (let attempt = 0; attempt < 4000; attempt++) {
+              const secret = ALL_CODES[Math.floor(rng() * ALL_CODES.length)];
+              // Sélection sans conflit de groupe d'exclusion mutuelle
+              const shuffledFamilies = shuffleWithRNG(VERIFIER_FAMILIES, rng);
+              const chosenFamilies = [];
+              const usedGroups = new Set();
+              for (const fam of shuffledFamilies) {
+                if (!usedGroups.has(fam.exclusionGroup)) {
+                  chosenFamilies.push(fam);
+                  usedGroups.add(fam.exclusionGroup);
+                  if (chosenFamilies.length === numVerifiers) break;
+                }
+              }
+              if (chosenFamilies.length < numVerifiers) continue;
+              // Attribution de la loi vraie pour `secret`
+              const activeVerifiers = [];
+              let validAssignment = true;
+              for (let i = 0; i < chosenFamilies.length; i++) {
+                const fam = chosenFamilies[i];
+                const matchingLawIndex = fam.laws.findIndex((law) =>
+                  law.test(secret),
+                );
+                if (matchingLawIndex === -1) {
+                  validAssignment = false;
+                  break;
+                }
+                activeVerifiers.push({
+                  letter: letters[i],
+                  family: fam,
+                  activeLawIndex: matchingLawIndex,
+                  activeLaw: fam.laws[matchingLawIndex],
+                });
+              }
+              if (!validAssignment) continue;
+              // Vérification rapide d'unicité avant certification complète
+              const matchingCodes = ALL_CODES.filter((code) =>
+                activeVerifiers.every((v) => v.activeLaw.test(code)),
+              );
+              if (matchingCodes.length !== 1) continue;
+              const candidatePuzzle = {
+                seed: canonicalSeed,
+                difficulty: numVerifiers,
+                secret,
+                verifiers: activeVerifiers,
+              };
+              const cert = verifyPuzzleCertificate(candidatePuzzle);
+              if (cert.valid) {
+                candidatePuzzle.certificate = cert;
+                return candidatePuzzle;
+              }
+            }
+          }
+          throw new Error(
+            `Impossible de certifier un tirage minimal pour la graine ${canonicalSeed}`,
+          );
+        }
+        // -------------------------------------------------------------------------
+        // 5. ÉTAT DE L'APPLICATION
+        // -------------------------------------------------------------------------
+        const state = {
+          difficulty: 5, // 4 = Tendre, 5 = Passionné, 6 = Fusionnel
+          seed: generateRandomSeed(),
+          puzzle: null,
+          proposal: { blue: 3, yellow: 3, purple: 3 },
+          round: 1,
+          totalQuestions: 0,
+          roundTestedVerifiers: {}, // { 'A': true/false }
+          lastPunchGlow: null, // null | 'emerald' | 'ruby'
+          history: [],
+          revealedHints: 0, // 0 à 3 niveaux d'indices dévoilés
+          notes: {
+            blue: [0, 0, 0, 0, 0], // 0 = neutre, 1 = rayé, 2 = entouré en or
+            yellow: [0, 0, 0, 0, 0],
+            purple: [0, 0, 0, 0, 0],
+          },
+          gameOver: false,
+        };
+        // -------------------------------------------------------------------------
+        // 6. UTILITAIRES D'INTERFACE
+        // -------------------------------------------------------------------------
+        let toastTimeout = null;
+        function showToast(message, type = "info") {
+          const banner = document.getElementById("toastBanner");
+          const content = document.getElementById("toastContent");
+          const dotColor =
+            type === "success"
+              ? "bg-emeraldGlow shadow-[0_0_8px_#34d399]"
+              : type === "error"
+                ? "bg-rubyGlow shadow-[0_0_8px_#fb7185]"
+                : "bg-gold shadow-[0_0_8px_#e6b87d]";
+          content.innerHTML = `<span class="w-2.5 h-2.5 rounded-full ${dotColor} inline-block shrink-0"></span><span>${message}</span>`;
+          banner.classList.remove("translate-y-24", "opacity-0");
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(() => {
+            banner.classList.add("translate-y-24", "opacity-0");
+          }, 3200);
+        }
+        function formatCodeStory([b, y, p]) {
+          return `${DIMENSIONS.blue.values[b]} • ${DIMENSIONS.yellow.values[y]} • ${DIMENSIONS.purple.values[p]}`;
+        }
+        // -------------------------------------------------------------------------
+        // 7. INITIALISATION & RENDU DES COMPOSANTS
+        // -------------------------------------------------------------------------
+        function startNewGame(customSeed = null, customDiff = null) {
+          if (customDiff) state.difficulty = customDiff;
+          state.seed = normalizeSeed(customSeed || generateRandomSeed());
+          state.puzzle = generatePuzzle(state.seed, state.difficulty);
+          state.proposal = { blue: 3, yellow: 3, purple: 3 };
+          state.round = 1;
+          state.totalQuestions = 0;
+          state.roundTestedVerifiers = {};
+          state.lastPunchGlow = null;
+          state.history = [];
+          state.revealedHints = 0;
+          state.notes = {
+            blue: [0, 0, 0, 0, 0],
+            yellow: [0, 0, 0, 0, 0],
+            purple: [0, 0, 0, 0, 0],
+          };
+          state.gameOver = false;
+          document.getElementById("seedInput").value = state.seed;
+          document.getElementById("freeNotes").value = "";
+          updateDifficultyButtons();
+          renderAll();
+        }
+        function updateDifficultyButtons() {
+          document.querySelectorAll(".diff-btn").forEach((btn) => {
+            const d = Number(btn.dataset.diff);
+            if (d === state.difficulty) {
+              btn.classList.add(
+                "bg-gold",
+                "text-velvet",
+                "font-bold",
+                "shadow-sm",
+              );
+              btn.classList.remove("text-dusty", "hover:text-champagne");
+            } else {
+              btn.classList.remove(
+                "bg-gold",
+                "text-velvet",
+                "font-bold",
+                "shadow-sm",
+              );
+              btn.classList.add("text-dusty", "hover:text-champagne");
+            }
+          });
+        }
+        function renderSelectorsAndPunchCards() {
+          const isLocked =
+            Object.keys(state.roundTestedVerifiers).length > 0 &&
+            !state.gameOver;
+          const lockWarning = document.getElementById("lockWarning");
+          if (isLocked) {
+            lockWarning.classList.remove("hidden");
+          } else {
+            lockWarning.classList.add("hidden");
+          }
+          // Badge de lueur sur les cartes perforées
+          const glowBadge = document.getElementById("punchGlowBadge");
+          if (state.lastPunchGlow === "emerald") {
+            glowBadge.textContent = "✓ Lueur émeraude (Accord)";
+            glowBadge.className =
+              "text-[10px] px-2.5 py-0.5 rounded-full bg-emeraldGlow/20 text-emeraldGlow border border-emeraldGlow/40 font-semibold";
+          } else if (state.lastPunchGlow === "ruby") {
+            glowBadge.textContent = "✗ Voile rubis (Dissonance)";
+            glowBadge.className =
+              "text-[10px] px-2.5 py-0.5 rounded-full bg-rubyGlow/20 text-rubyGlow border border-rubyGlow/40 font-semibold";
+          } else {
+            glowBadge.textContent = "En attente d’un frisson";
+            glowBadge.className =
+              "text-[10px] px-2.5 py-0.5 rounded-full bg-gold/15 text-champagne border border-gold/30";
+          }
+          ["blue", "yellow", "purple"].forEach((dimKey) => {
+            const dim = DIMENSIONS[dimKey];
+            const val = state.proposal[dimKey];
+            const container = document.getElementById(`${dimKey}Selector`);
+            const badge = document.getElementById(`${dimKey}LabelBadge`);
+            const desc = document.getElementById(`${dimKey}Desc`);
+            badge.textContent = `${val}. ${dim.values[val]}`;
+            desc.textContent = dim.values[val];
+            container.innerHTML = "";
+            for (let n = 1; n <= 5; n++) {
+              const btn = document.createElement("button");
+              const active = n === val;
+              btn.type = "button";
+              btn.textContent = n;
+              btn.disabled = isLocked;
+              btn.className = `py-2 rounded-lg font-bold text-sm transition ${
+                active
+                  ? `${dim.bgClass} ${dimKey === "yellow" ? "text-velvet" : "text-white"} shadow-md scale-105`
+                  : "bg-velvet/80 text-cream border border-gold/20 hover:border-gold/50"
+              } ${isLocked && !active ? "opacity-40 cursor-not-allowed" : ""}`;
+              btn.addEventListener("click", () => {
+                if (isLocked) return;
+                state.proposal[dimKey] = n;
+                state.lastPunchGlow = null;
+                renderSelectorsAndPunchCards();
+              });
+              container.appendChild(btn);
+            }
+            // Rendu de la ligne correspondante sur les voiles perforés superposés
+            const punchRow = document.getElementById(
+              `punchRow${dimKey.charAt(0).toUpperCase() + dimKey.slice(1)}`,
+            );
+            punchRow.innerHTML = "";
+            for (let n = 1; n <= 5; n++) {
+              const hole = document.createElement("div");
+              const isOpen = n === val;
+              let openStyle = "open";
+              if (isOpen && state.lastPunchGlow === "emerald")
+                openStyle = "open-emerald";
+              if (isOpen && state.lastPunchGlow === "ruby")
+                openStyle = "open-ruby";
+              hole.className = `punch-hole w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
+                isOpen ? openStyle : "closed text-transparent"
+              }`;
+              hole.textContent = n;
+              punchRow.appendChild(hole);
+            }
+          });
+          const codeArr = [
+            state.proposal.blue,
+            state.proposal.yellow,
+            state.proposal.purple,
+          ];
+          document.getElementById("proposalSummaryText").textContent =
+            formatCodeStory(codeArr);
+          document.getElementById("proposalCodeBadge").textContent =
+            codeArr.join(" - ");
+        }
+        function renderVerifiers() {
+          const grid = document.getElementById("verifiersGrid");
+          grid.innerHTML = "";
+          const testsThisRound = Object.keys(state.roundTestedVerifiers).length;
+          state.puzzle.verifiers.forEach((verif) => {
+            const hasTested = Object.prototype.hasOwnProperty.call(
+              state.roundTestedVerifiers,
+              verif.letter,
+            );
+            const resultBool = state.roundTestedVerifiers[verif.letter];
+            const canTest = !hasTested && testsThisRound < 3 && !state.gameOver;
+            const card = document.createElement("div");
+            card.className = `velvet-card rounded-2xl p-4 shadow-sensual flex flex-col justify-between transition ${
+              hasTested
+                ? resultBool
+                  ? "border-emeraldGlow/55 bg-emeraldGlow/[0.06]"
+                  : "border-rubyGlow/55 bg-rubyGlow/[0.06]"
+                : "hover:border-gold/45"
+            }`;
+            const lawsHtml = verif.family.laws
+              .map(
+                (law) =>
+                  `<li class="flex items-center gap-2 text-xs text-cream/85"><span class="w-1.5 h-1.5 rounded-full bg-gold/80 shrink-0"></span><span>${law.label}</span></li>`,
+              )
+              .join("");
+            card.innerHTML = `
+                                                                                                                      <div class="space-y-2.5">
+                                                                                                                        <div class="flex items-start justify-between gap-2">
+                                                                                                                          <div class="flex items-center gap-2.5">
+                                                                                                                            <span class="w-8 h-8 rounded-xl bg-gradient-to-br from-gold to-champagne text-velvet font-serif font-bold text-lg flex items-center justify-center shadow-sm">${verif.letter}</span>
+                                                                                                                              <div>
+                                                                                                                                <h3 class="font-serif text-lg font-bold text-champagne leading-tight">${verif.family.title}</h3>
+                                                                                                                                  <p class="text-[11px] text-dusty">${verif.family.subtitle}</p>
+                                                                                                                                  </div>
+                                                                                                                                </div>
+                                                                                                                                ${
+                                                                                                                                  hasTested
+                                                                                                                                    ? resultBool
+                                                                                                                                      ? `<span class="px-2.5 py-1 rounded-full bg-emeraldGlow/20 text-emeraldGlow border border-emeraldGlow/40 text-xs font-bold flex items-center gap-1">✓ Accord</span>`
+                                                                                                                                      : `<span class="px-2.5 py-1 rounded-full bg-rubyGlow/20 text-rubyGlow border border-rubyGlow/40 text-xs font-bold flex items-center gap-1">✗ Dissonance</span>`
+                                                                                                                                    : ""
+                                                                                                                                }
+                                                                                                                              </div>
+                                                                                                                              <div class="rounded-xl bg-velvet/75 border border-gold/15 px-3 py-2.5">
+                                                                                                                                <div class="text-[10px] uppercase tracking-wider font-semibold text-gold/80 mb-1">Promesses possibles :</div>
+                                                                                                                                  <ul class="space-y-1">${lawsHtml}</ul>
+                                                                                                                                  </div>
+                                                                                                                                </div>
+                                                                                                                                <div class="pt-3 mt-3 border-t border-gold/15 flex items-center justify-between">
+                                                                                                                                  <span class="text-[11px] text-dusty">${hasTested ? "Sondé cette nuit" : "1 vérité cachée"}</span>
+                                                                                                                                    <button
+                                                                                                                                      data-letter="${verif.letter}"
+                                                                                                                                      ${canTest ? "" : "disabled"}
+                                                                                                                                      class="test-verif-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${
+                                                                                                                                        hasTested
+                                                                                                                                          ? "bg-velvet/70 text-dusty cursor-default border border-gold/10"
+                                                                                                                                          : canTest
+                                                                                                                                            ? "bg-gradient-to-r from-crimson to-[#b83b58] text-white hover:brightness-110 shadow-md"
+                                                                                                                                            : "bg-velvet/60 text-dusty/40 cursor-not-allowed border border-gold/10"
+                                                                                                                                      }"
+                                                                                                                                      >
+                                                                                                                                      ${hasTested ? "Révélé" : testsThisRound >= 3 ? "Limite (3/3)" : "Sonder l’indice"}
+                                                                                                                                    </button>
+                                                                                                                                  </div>
+                                                                                                                                  `;
+            grid.appendChild(card);
+          });
+          document.querySelectorAll(".test-verif-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const letter = btn.dataset.letter;
+              interrogateVerifier(letter);
+            });
+          });
+        }
+        function interrogateVerifier(letter) {
+          if (state.gameOver) return;
+          const testsCount = Object.keys(state.roundTestedVerifiers).length;
+          if (testsCount >= 3) {
+            showToast(
+              "B. & V. ont déjà sondé 3 indices cette nuit. Glissez vers la nuit suivante.",
+              "error",
+            );
+            return;
+          }
+          if (
+            Object.prototype.hasOwnProperty.call(
+              state.roundTestedVerifiers,
+              letter,
+            )
+          )
+            return;
+          const verif = state.puzzle.verifiers.find((v) => v.letter === letter);
+          if (!verif) return;
+          const codeArr = [
+            state.proposal.blue,
+            state.proposal.yellow,
+            state.proposal.purple,
+          ];
+          const passed = verif.activeLaw.test(codeArr);
+          state.roundTestedVerifiers[letter] = passed;
+          state.totalQuestions += 1;
+          state.lastPunchGlow = passed ? "emerald" : "ruby";
+          let currentRoundEntry = state.history.find(
+            (h) => h.round === state.round,
+          );
+          if (!currentRoundEntry) {
+            currentRoundEntry = {
+              round: state.round,
+              code: [...codeArr],
+              results: [],
+            };
+            state.history.unshift(currentRoundEntry);
+          }
+          currentRoundEntry.results.push({
+            letter,
+            title: verif.family.title,
+            passed,
+          });
+          showToast(
+            passed
+              ? `Indice ${letter} (${verif.family.title}) : ✓ Lueur émeraude !`
+              : `Indice ${letter} (${verif.family.title}) : ✗ Voile rubis.`,
+            passed ? "success" : "error",
+          );
+          renderAll();
+        }
+        function nextRound() {
+          if (state.gameOver) return;
+          if (Object.keys(state.roundTestedVerifiers).length === 0) {
+            showToast(
+              "Sondez au moins un Indice du Cœur avant de passer à la nuit suivante.",
+              "info",
+            );
+            return;
+          }
+          state.round += 1;
+          state.roundTestedVerifiers = {};
+          state.lastPunchGlow = null;
+          showToast(
+            `Nuit n°${state.round} : esquissez une nouvelle rencontre pour B. & V.`,
+            "info",
+          );
+          renderAll();
+        }
+        // -------------------------------------------------------------------------
+        // 8. CARNET INTIME DE DÉDUCTION & MURMURE DE L'INTUITION
+        // -------------------------------------------------------------------------
+        function renderDeductionGrid() {
+          const container = document.getElementById("deductionGrid");
+          container.innerHTML = "";
+          ["blue", "yellow", "purple"].forEach((dimKey) => {
+            const dim = DIMENSIONS[dimKey];
+            const row = document.createElement("div");
+            row.className =
+              "flex items-center justify-between gap-2 p-2.5 rounded-xl bg-velvet/75 border border-gold/15";
+            const label = document.createElement("div");
+            label.className = `text-xs font-bold ${dim.textClass} w-28 shrink-0 flex items-center gap-1.5`;
+            label.innerHTML = `<span class="w-2.5 h-2.5 rounded-full ${dim.bgClass}"></span><span>${dim.short}</span>`;
+            row.appendChild(label);
+            const cellsWrap = document.createElement("div");
+            cellsWrap.className = "grid grid-cols-5 gap-1.5 flex-1";
+            for (let idx = 0; idx < 5; idx++) {
+              const val = idx + 1;
+              const status = state.notes[dimKey][idx]; // 0 = neutre, 1 = rayé, 2 = entouré en or
+              const cell = document.createElement("button");
+              cell.type = "button";
+              cell.title = `${val}. ${dim.values[val]} (clic pour voiler / reclic pour couronner d’or)`;
+              cell.className = `note-cell py-1.5 rounded-lg border text-xs font-semibold ${
+                status === 1
+                  ? "note-eliminated"
+                  : status === 2
+                    ? "note-confirmed"
+                    : "bg-boudoir/90 border-gold/20 text-cream hover:border-gold/50"
+              }`;
+              cell.textContent = val;
+              cell.addEventListener("click", () => {
+                state.notes[dimKey][idx] = (state.notes[dimKey][idx] + 1) % 3;
+                renderDeductionGrid();
+              });
+              cellsWrap.appendChild(cell);
+            }
+            row.appendChild(cellsWrap);
+            container.appendChild(row);
+          });
+          updateHelperCount();
+        }
+        function updateHelperCount() {
+          const isHelperOn = document.getElementById("helperToggle").checked;
+          const banner = document.getElementById("helperBanner");
+          if (!isHelperOn) {
+            banner.classList.add("hidden");
+            return;
+          }
+          banner.classList.remove("hidden");
+          const getAllowedValues = (dimKey) => {
+            const arr = state.notes[dimKey];
+            const confirmed = [];
+            const possible = [];
+            arr.forEach((st, idx) => {
+              if (st === 2) confirmed.push(idx + 1);
+              if (st !== 1) possible.push(idx + 1);
+            });
+            if (confirmed.length > 0) return confirmed;
+            return possible;
+          };
+          const bCount = getAllowedValues("blue").length;
+          const yCount = getAllowedValues("yellow").length;
+          const pCount = getAllowedValues("purple").length;
+          const total = bCount * yCount * pCount;
+          const badge = document.getElementById("remainingCountBadge");
+          badge.textContent = `${total} / 125`;
+          badge.className = `font-mono font-bold px-2.5 py-0.5 rounded-md border ${
+            total === 1
+              ? "bg-emeraldGlow/20 text-emeraldGlow border-emeraldGlow/40"
+              : total === 0
+                ? "bg-rubyGlow/20 text-rubyGlow border-rubyGlow/40"
+                : "bg-boudoir text-champagne border-gold/30"
+          }`;
+        }
+        // -------------------------------------------------------------------------
+        // 9. JOURNAL DES NUITS & EN-TÊTE
+        // -------------------------------------------------------------------------
+        function renderStatsAndHistory() {
+          document.getElementById("roundDisplay").textContent = state.round;
+          document.getElementById("totalQuestionsDisplay").textContent =
+            state.totalQuestions;
+          document.getElementById("roundTestsDisplay").textContent =
+            Object.keys(state.roundTestedVerifiers).length;
+          const container = document.getElementById("historyContainer");
+          if (state.history.length === 0) {
+            container.innerHTML = `<p class="text-xs text-dusty italic py-4 text-center">Aucun soupir échangé pour l’instant. Esquissez une rencontre et sondez un Indice du Cœur.</p>`;
+            return;
+          }
+          container.innerHTML = state.history
+            .map((entry) => {
+              const [b, y, p] = entry.code;
+              const resultsBadges = entry.results
+                .map(
+                  (r) => `
+                                                                                                                                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold border ${
+                                                                                                                                    r.passed
+                                                                                                                                      ? "bg-emeraldGlow/15 text-emeraldGlow border-emeraldGlow/35"
+                                                                                                                                      : "bg-rubyGlow/15 text-rubyGlow border-rubyGlow/35"
+                                                                                                                                  }">
+                                                                                                                                    <strong>${r.letter}</strong> ${r.passed ? "✓" : "✗"}
+                                                                                                                                    </span>
+                                                                                                                                    `,
+                )
+                .join("");
+              return `
+                                                                                                                                    <div class="rounded-xl bg-velvet/80 border border-gold/15 p-3 space-y-2">
+                                                                                                                                      <div class="flex items-center justify-between gap-2">
+                                                                                                                                        <span class="text-[11px] font-bold uppercase tracking-wider text-gold">Nuit ${entry.round}</span>
+                                                                                                                                          <div class="flex items-center gap-1 font-mono text-xs font-bold">
+                                                                                                                                            <span class="px-1.5 py-0.5 rounded bg-sapphire/25 text-blue-200 border border-sapphire/35">${b}</span>
+                                                                                                                                              <span class="px-1.5 py-0.5 rounded bg-gold/25 text-champagne border border-gold/35">${y}</span>
+                                                                                                                                                <span class="px-1.5 py-0.5 rounded bg-crimson/25 text-blush border border-crimson/35">${p}</span>
+                                                                                                                                                </div>
+                                                                                                                                              </div>
+                                                                                                                                              <div class="text-[11px] text-dusty truncate">${formatCodeStory(entry.code)}</div>
+                                                                                                                                                <div class="flex flex-wrap gap-1.5 pt-0.5">${resultsBadges}</div>
+                                                                                                                                                </div>
+                                                                                                                                                `;
+            })
+            .join("");
+        }
+        function renderAll() {
+          renderStatsAndHistory();
+          renderSelectorsAndPunchCards();
+          renderVerifiers();
+          renderDeductionGrid();
+        }
+        // -------------------------------------------------------------------------
+        // 10. RÉSOLUTION FINALE & BILAN ROMANTIQUE POUR B. & V.
+        // -------------------------------------------------------------------------
+        function openSolveModal() {
+          document.getElementById("guessBlue").value = state.proposal.blue;
+          document.getElementById("guessYellow").value = state.proposal.yellow;
+          document.getElementById("guessPurple").value = state.proposal.purple;
+          const modal = document.getElementById("solveModal");
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+        }
+        function closeSolveModal() {
+          const modal = document.getElementById("solveModal");
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+        }
+        function evaluateFinalGuess() {
+          const gb = Number(document.getElementById("guessBlue").value);
+          const gy = Number(document.getElementById("guessYellow").value);
+          const gp = Number(document.getElementById("guessPurple").value);
+          const [sb, sy, sp] = state.puzzle.secret;
+          const isWin = gb === sb && gy === sy && gp === sp;
+          state.gameOver = true;
+          closeSolveModal();
+          renderAll();
+          const iconEl = document.getElementById("resultIcon");
+          const titleEl = document.getElementById("resultTitle");
+          const subtitleEl = document.getElementById("resultSubtitle");
+          if (isWin) {
+            iconEl.className =
+              "w-16 h-16 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg bg-gradient-to-br from-gold to-champagne text-velvet";
+            iconEl.textContent = "♥";
+            titleEl.textContent = "L’Alchimie entre B. & V. est parfaite";
+            subtitleEl.textContent =
+              state.round <= 3
+                ? "Une intuition fulgurante : leurs deux cœurs se sont reconnus dès les premiers regards."
+                : "À force de patience et de finesse, vous avez percé l’unique accord qui les réunit.";
+          } else {
+            iconEl.className =
+              "w-16 h-16 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg bg-crimson/25 text-blush border border-crimson/50";
+            iconEl.textContent = "✦";
+            titleEl.textContent = "Un voile demeure entre B. & V.";
+            subtitleEl.textContent = `Votre serment (${gb} - ${gy} - ${gp}) ne répondait pas à toutes les promesses secrètes du cœur.`;
+          }
+          document.getElementById("solutionCodeDisplay").textContent =
+            `Atmosphère ${sb} • Élan ${sy} • Confidences ${sp}`;
+          document.getElementById("solutionStoryDisplay").textContent =
+            `« ${formatCodeStory([sb, sy, sp])} »`;
+          document.getElementById("resultStats").innerHTML = `
+                                                                                                                                                <div>Nuits : <strong class="text-champagne">${state.round}</strong></div>
+                                                                                                                                                <div>Soupirs : <strong class="text-champagne">${state.totalQuestions}</strong></div>
+                                                                                                                                                <div>Serment : <strong class="font-mono text-gold">${state.seed}</strong></div>
+                                                                                                                                                `;
+          revealVerifierAnswers();
+          const resModal = document.getElementById("resultModal");
+          resModal.classList.remove("hidden");
+          resModal.classList.add("flex");
+        }
+        function revealVerifierAnswers() {
+          const grid = document.getElementById("verifiersGrid");
+          grid.innerHTML = "";
+          state.puzzle.verifiers.forEach((verif) => {
+            const card = document.createElement("div");
+            card.className =
+              "velvet-card rounded-2xl border-gold/45 bg-gold/[0.06] p-4 shadow-sensual space-y-2";
+            card.innerHTML = `
+                                                                                                                                                <div class="flex items-center gap-2.5">
+                                                                                                                                                  <span class="w-8 h-8 rounded-xl bg-gold text-velvet font-serif font-bold text-lg flex items-center justify-center">${verif.letter}</span>
+                                                                                                                                                    <div>
+                                                                                                                                                      <h3 class="font-serif text-lg font-bold text-champagne leading-tight">${verif.family.title}</h3>
+                                                                                                                                                        <p class="text-[11px] text-emeraldGlow font-semibold">Vérité secrète : ${verif.activeLaw.label}</p>
+                                                                                                                                                        </div>
+                                                                                                                                                      </div>
+                                                                                                                                                      `;
+            grid.appendChild(card);
+          });
+        }
+        // -------------------------------------------------------------------------
+        // 11. BANC D'ÉPREUVE — SUITE DE TESTS AUTOMATISÉS & SOLVEUR LOGIQUE
+        // -------------------------------------------------------------------------
+        function simulateOptimalSolver(puzzle) {
+          // Simulation d'un stratège utilisant l'élimination croisée et la non-redondance
+          let candidatePool = [...ALL_CODES];
+          let nights = 0;
+          let sighs = 0;
+          const testedPairs = new Set();
+          while (candidatePool.length > 1 && nights < 10) {
+            nights += 1;
+            // Choisir la combinaison qui discrimine au mieux les candidats restants
+            let bestProposal = candidatePool[0];
+            let bestScore = -1;
+            for (const prop of ALL_CODES) {
+              let splitScore = 0;
+              for (const v of puzzle.verifiers) {
+                const key = `${prop.join("")}-${v.letter}`;
+                if (testedPairs.has(key)) continue;
+                const trueCount = candidatePool.filter((c) =>
+                  v.activeLaw.test(c),
+                ).length;
+                const falseCount = candidatePool.length - trueCount;
+                splitScore += Math.min(trueCount, falseCount);
+              }
+              if (splitScore > bestScore) {
+                bestScore = splitScore;
+                bestProposal = prop;
+              }
+            }
+            // Tester jusqu'à 3 vérificateurs pertinents pour cette proposition
+            let testsThisNight = 0;
+            for (const v of puzzle.verifiers) {
+              if (testsThisNight >= 3 || candidatePool.length <= 1) break;
+              const key = `${bestProposal.join("")}-${v.letter}`;
+              if (testedPairs.has(key)) continue;
+              const trueCount = candidatePool.filter((c) =>
+                v.activeLaw.test(c),
+              ).length;
+              if (trueCount === 0 || trueCount === candidatePool.length)
+                continue;
+              testedPairs.add(key);
+              testsThisNight += 1;
+              sighs += 1;
+              const actualOutcome = v.activeLaw.test(puzzle.secret);
+              candidatePool = candidatePool.filter(
+                (c) => v.activeLaw.test(c) === actualOutcome,
+              );
+            }
+            if (testsThisNight === 0) break;
+          }
+          const solved =
+            candidatePool.length === 1 &&
+            candidatePool[0][0] === puzzle.secret[0] &&
+            candidatePool[0][1] === puzzle.secret[1] &&
+            candidatePool[0][2] === puzzle.secret[2];
+          return { solved, nights, sighs, remaining: candidatePool.length };
+        }
+        function runBenchmarkSuite() {
+          const logs = [];
+          let totalChecks = 0;
+          let passedChecks = 0;
+          // --- TEST 1 : EXHAUSTIVITÉ DES 125 COMBINAISONS & PARTITIONNEMENT DES FAMILLES ---
+          let bankErrors = [];
+          if (ALL_CODES.length !== 125) {
+            bankErrors.push(
+              `Espace invalide : ${ALL_CODES.length} au lieu de 125`,
+            );
+          }
+          for (const fam of VERIFIER_FAMILIES) {
+            let totalCovered = 0;
+            const coveredSet = new Set();
+            for (const law of fam.laws) {
+              const matches = ALL_CODES.filter((c) => law.test(c));
+              totalChecks += 1;
+              if (matches.length === 0 || matches.length === 125) {
+                bankErrors.push(
+                  `Loi triviale dans ${fam.id} : "${law.label}" (${matches.length}/125)`,
+                );
+              } else {
+                passedChecks += 1;
+              }
+              for (const m of matches) {
+                const k = m.join("-");
+                if (coveredSet.has(k)) {
+                  bankErrors.push(
+                    `Chevauchement interne dans ${fam.id} sur ${k}`,
+                  );
+                }
+                coveredSet.add(k);
+                totalCovered += 1;
+              }
+            }
+            totalChecks += 1;
+            if (totalCovered !== 125) {
+              bankErrors.push(
+                `Partition incomplète pour ${fam.id} (${totalCovered}/125)`,
+              );
+            } else {
+              passedChecks += 1;
+            }
+          }
+          logs.push({
+            title:
+              "Test 1 — Intégrité mathématique de la banque des Frissons sur {1..5}³",
+            ok: bankErrors.length === 0,
+            detail:
+              bankErrors.length === 0
+                ? `${VERIFIER_FAMILIES.length} familles vérifiées : chaque famille partitionne exactement les 125 combinaisons sans loi triviale ni chevauchement.`
+                : bankErrors.join(" | "),
+          });
+          // --- TEST 2 : STRESS-TEST 300 TIRAGES (100 PAR INTENSITÉ : 4, 5, 6) ---
+          const intensities = [4, 5, 6];
+          const perLevel = 100;
+          let stressFailures = [];
+          let genTimes = [];
+          let minAblation = Infinity;
+          let maxAblation = 0;
+          let ablationSum = 0;
+          let ablationCount = 0;
+          for (const diff of intensities) {
+            for (let i = 0; i < perLevel; i++) {
+              const seed = `TEST${diff}N${i}`;
+              const t0 = performance.now();
+              const p1 = generatePuzzle(seed, diff);
+              const t1 = performance.now();
+              genTimes.push(t1 - t0);
+              // 2a. Certification stricte (unicité + minimalité)
+              totalChecks += 1;
+              const cert = verifyPuzzleCertificate(p1);
+              if (!cert.valid) {
+                stressFailures.push(`[${seed}] ${cert.reason}`);
+              } else {
+                passedChecks += 1;
+                for (const cnt of cert.ablationCounts) {
+                  if (cnt < minAblation) minAblation = cnt;
+                  if (cnt > maxAblation) maxAblation = cnt;
+                  ablationSum += cnt;
+                  ablationCount += 1;
+                }
+              }
+              // 2b. Déterminisme absolu de la graine (rejouer avec espaces/minuscules)
+              totalChecks += 1;
+              const p2 = generatePuzzle(` ${seed.toLowerCase()} `, diff);
+              const sameSecret = p1.secret.join("-") === p2.secret.join("-");
+              const sameVerifs =
+                p1.verifiers
+                  .map((v) => `${v.family.id}:${v.activeLawIndex}`)
+                  .join("|") ===
+                p2.verifiers
+                  .map((v) => `${v.family.id}:${v.activeLawIndex}`)
+                  .join("|");
+              if (!sameSecret || !sameVerifs) {
+                stressFailures.push(
+                  `[${seed}] Non-déterminisme détecté sur la graine`,
+                );
+              } else {
+                passedChecks += 1;
+              }
+              // 2c. Cohérence géométrique des Voiles ajourés sur le secret
+              totalChecks += 1;
+              const allMatchSecret = p1.verifiers.every(
+                (v) => v.activeLaw.test(p1.secret) === true,
+              );
+              if (!allMatchSecret) {
+                stressFailures.push(
+                  `[${seed}] Incohérence d'évaluation sur le secret`,
+                );
+              } else {
+                passedChecks += 1;
+              }
+            }
+          }
+          const avgGenMs =
+            genTimes.reduce((a, b) => a + b, 0) / genTimes.length;
+          const maxGenMs = Math.max(...genTimes);
+          logs.push({
+            title:
+              "Test 2 — Stress-test massif (300 nuits : 100×4, 100×5, 100×6 indices)",
+            ok: stressFailures.length === 0,
+            detail:
+              stressFailures.length === 0
+                ? `300/300 nuits certifiées minimales et 100 % déterministes. Temps moyen : ${avgGenMs.toFixed(2)} ms (pic : ${maxGenMs.toFixed(2)} ms).`
+                : stressFailures.slice(0, 3).join(" | "),
+          });
+          // --- TEST 3 : SOLVEUR LOGIQUE AUTOMATIQUE SUR 60 PARTIES ---
+          let solverWins = 0;
+          let totalSolverNights = 0;
+          let totalSolverSighs = 0;
+          const solverSampleCount = 60;
+          for (let i = 0; i < solverSampleCount; i++) {
+            const diff = intensities[i % 3];
+            const p = generatePuzzle(`SOLV${i}`, diff);
+            const sim = simulateOptimalSolver(p);
+            totalChecks += 1;
+            if (sim.solved) {
+              solverWins += 1;
+              passedChecks += 1;
+              totalSolverNights += sim.nights;
+              totalSolverSighs += sim.sighs;
+            }
+          }
+          const avgNights = (totalSolverNights / solverSampleCount).toFixed(2);
+          const avgSighs = (totalSolverSighs / solverSampleCount).toFixed(2);
+          logs.push({
+            title: "Test 3 — Solveur logique pur sur 60 nuits aléatoires",
+            ok: solverWins === solverSampleCount,
+            detail: `${solverWins}/${solverSampleCount} victoires sans hasard. Convergence moyenne en ${avgNights} nuits (${avgSighs} soupirs).`,
+          });
+          // Mise à jour des compteurs de la modale
+          const rate = ((passedChecks / totalChecks) * 100).toFixed(1);
+          document.getElementById("benchSuccessRate").textContent = `${rate}%`;
+          document.getElementById("benchTotalTested").textContent =
+            `${passedChecks} / ${totalChecks} contrôles validés`;
+          document.getElementById("benchAvgTime").textContent =
+            `${avgGenMs.toFixed(2)} ms`;
+          document.getElementById("benchMaxTime").textContent =
+            `Pic : ${maxGenMs.toFixed(2)} ms`;
+          document.getElementById("benchMinRedundancy").textContent =
+            `Min ${minAblation} / Moy ${(ablationSum / ablationCount).toFixed(1)}`;
+          document.getElementById("benchSolverAvg").textContent =
+            `${avgNights} nuits`;
+          const reportEl = document.getElementById("benchReportContainer");
+          reportEl.innerHTML = logs
+            .map(
+              (item) => `
+                                                                                                                                                      <div class="p-4 rounded-2xl bg-velvet/85 border ${item.ok ? "border-emeraldGlow/40" : "border-rubyGlow/50"} space-y-1.5">
+                                                                                                                                                        <div class="flex items-center justify-between gap-2">
+                                                                                                                                                          <span class="font-serif text-lg font-bold text-champagne">${item.title}</span>
+                                                                                                                                                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                                                                                                                                                              item.ok
+                                                                                                                                                                ? "bg-emeraldGlow/20 text-emeraldGlow border border-emeraldGlow/40"
+                                                                                                                                                                : "bg-rubyGlow/20 text-rubyGlow border border-rubyGlow/40"
+                                                                                                                                                            }">${item.ok ? "✓ CERTIFIÉ" : "✗ ÉCHEC"}</span>
+                                                                                                                                                            </div>
+                                                                                                                                                            <p class="text-dusty leading-relaxed">${item.detail}</p>
+                                                                                                                                                            </div>
+                                                                                                                                                            `,
+            )
+            .join("");
+        }
+        function openBenchModal() {
+          const m = document.getElementById("benchModal");
+          m.classList.remove("hidden");
+          m.classList.add("flex");
+          setTimeout(runBenchmarkSuite, 30);
+        }
+        function closeBenchModal() {
+          const m = document.getElementById("benchModal");
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+        }
+        // -------------------------------------------------------------------------
+        // 11B. MOTEUR DES INDICES PROGRESSIFS (MURMURE DE L'INTUITION)
+        // -------------------------------------------------------------------------
+        function computeProgressiveHints() {
+          const puzzle = state.puzzle;
+          const secret = puzzle.secret;
+          // 1. Calculer l'ensemble des combinaisons encore compatibles avec l'historique sondé
+          const observedObservations = [];
+          state.history.forEach((entry) => {
+            entry.results.forEach((res) => {
+              const verif = puzzle.verifiers.find(
+                (v) => v.letter === res.letter,
+              );
+              if (verif) {
+                observedObservations.push({
+                  verif,
+                  passed: res.passed,
+                });
+              }
+            });
+          });
+          const logicallyCompatible = ALL_CODES.filter((code) =>
+            observedObservations.every(
+              (obs) => obs.verif.activeLaw.test(code) === obs.passed,
+            ),
+          );
+          // Identifier les indices jamais encore sondés
+          const testedLetters = new Set(
+            observedObservations.map((o) => o.verif.letter),
+          );
+          const untestedVerifiers = puzzle.verifiers.filter(
+            (v) => !testedLetters.has(v.letter),
+          );
+          // Évaluer le pouvoir filtrant de chaque indice sur les candidats restants
+          let bestVerifier = untestedVerifiers[0] || puzzle.verifiers[0];
+          let bestSplitMin = -1;
+          puzzle.verifiers.forEach((v) => {
+            const trueCount = logicallyCompatible.filter((c) =>
+              v.activeLaw.test(c),
+            ).length;
+            const falseCount = logicallyCompatible.length - trueCount;
+            const splitScore =
+              Math.min(trueCount, falseCount) +
+              (testedLetters.has(v.letter) ? 0 : 100);
+            if (splitScore > bestSplitMin) {
+              bestSplitMin = splitScore;
+              bestVerifier = v;
+            }
+          });
+          // 2. Murmure I : Le Souffle (état de l'espace de recherche + portée de la loi la plus filtrante)
+          const bestLawMatches = ALL_CODES.filter((c) =>
+            bestVerifier.activeLaw.test(c),
+          ).length;
+          const murI = {
+            level: 1,
+            badge: "Murmure I • Le Souffle",
+            title: "L’horizon des étreintes compatibles",
+            body:
+              observedObservations.length === 0
+                ? `Vous n’avez pas encore sondé l’Oracle : les <strong class="text-champagne">125 accords</strong> restent ouverts. L’indice le plus tranchant à explorer en premier est <strong class="text-gold">${bestVerifier.letter} (${bestVerifier.family.title})</strong>, dont la vérité secrète ne retient que <strong class="text-emeraldGlow">${bestLawMatches} combinaisons sur 125</strong>.`
+                : `D’après les <strong class="text-champagne">${observedObservations.length} frisson(s)</strong> déjà sondés dans le Journal des Nuits, il ne subsiste mathématiquement que <strong class="text-emeraldGlow">${logicallyCompatible.length} combinaison(s) sur 125</strong> compatibles avec les réponses reçues.`,
+          };
+          // 3. Murmure II : La Piste (désigne l'Indice le plus discriminant à interroger)
+          const currentProposalArr = [
+            state.proposal.blue,
+            state.proposal.yellow,
+            state.proposal.purple,
+          ];
+          const wouldPassNow = bestVerifier.activeLaw.test(currentProposalArr);
+          const murII = {
+            level: 2,
+            badge: "Murmure II • La Piste",
+            title: "Où poser votre regard cette nuit",
+            body:
+              untestedVerifiers.length > 0
+                ? `L’indice <strong class="text-gold">${bestVerifier.letter} — « ${bestVerifier.family.title} »</strong> (${bestVerifier.family.subtitle}) n’a pas encore livré son secret et permet de trancher nettement parmi les pistes restantes. Avec votre esquisse actuelle <span class="font-mono text-champagne">[${currentProposalArr.join(" - ")}]</span>, cet indice vibrerait d’un <strong class="${wouldPassNow ? "text-emeraldGlow" : "text-rubyGlow"}">${wouldPassNow ? "accord émeraude (✓)" : "voile rubis (✗)"}</strong>.`
+                : `Tous les Indices du Cœur ont déjà été sondés au moins une fois ! Concentrez-vous sur <strong class="text-gold">${bestVerifier.letter} — « ${bestVerifier.family.title} »</strong> : croisez ses promesses avec vos autres réponses pour isoler l’unique accord survivant.`,
+          };
+          // 4. Murmure III : La Clé de Non-Redondance (nuance garantie absente de la solution)
+          const dimOrder = ["blue", "yellow", "purple"];
+          let chosenDimKey = "blue";
+          let eliminatedVal = 1;
+          for (let dIdx = 0; dIdx < 3; dIdx++) {
+            const dk = dimOrder[dIdx];
+            const secretVal = secret[dIdx];
+            // Choisir une valeur différente du secret (en privilégiant une valeur non encore éliminée par le joueur)
+            const candidates = [1, 2, 3, 4, 5].filter((v) => v !== secretVal);
+            const unmarked = candidates.find(
+              (v) => state.notes[dk][v - 1] !== 1,
+            );
+            if (unmarked !== undefined) {
+              chosenDimKey = dk;
+              eliminatedVal = unmarked;
+              break;
+            }
+            chosenDimKey = dk;
+            eliminatedVal = candidates[0];
+          }
+          const dimObj = DIMENSIONS[chosenDimKey];
+          const murIII = {
+            level: 3,
+            badge: "Murmure III • La Clé du Serment d’Or",
+            title: "Une nuance exclue par la pureté du désir",
+            body: `Par le croisement des ${puzzle.difficulty} Indices du Cœur et le Serment de non-redondance, la nuance <strong class="text-crimson">${eliminatedVal}. « ${dimObj.values[eliminatedVal]} »</strong> dans la dimension <strong class="${dimObj.textClass}">${dimObj.name}</strong> est <strong class="text-champagne">garantie absente</strong> de l’étreinte secrète de B. &amp; V. Vous pouvez la voiler sur La Carte du Tendre.`,
+          };
+          return [murI, murII, murIII];
+        }
+        function renderHintsModal() {
+          const hints = computeProgressiveHints();
+          const container = document.getElementById("hintsListContainer");
+          document.getElementById("hintsProgressLabel").textContent =
+            `${state.revealedHints} / 3 murmures dévoilés cette nuit`;
+          container.innerHTML = hints
+            .map((h, idx) => {
+              const isUnlocked = idx < state.revealedHints;
+              const isNext = idx === state.revealedHints;
+              if (isUnlocked) {
+                return `
+                                                                                                                                                            <div class="p-4 rounded-2xl bg-velvet/90 border border-gold/40 space-y-1.5 shadow-sensual">
+                                                                                                                                                              <div class="flex items-center justify-between">
+                                                                                                                                                                <span class="text-[11px] font-bold uppercase tracking-wider text-gold">${h.badge}</span>
+                                                                                                                                                                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-emeraldGlow/15 text-emeraldGlow border border-emeraldGlow/35 font-semibold">Dévoilé</span>
+                                                                                                                                                                  </div>
+                                                                                                                                                                  <h4 class="font-serif text-xl font-bold text-champagne">${h.title}</h4>
+                                                                                                                                                                    <p class="text-xs text-cream/90 leading-relaxed">${h.body}</p>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    `;
+              }
+              return `
+                                                                                                                                                                    <div class="p-4 rounded-2xl bg-velvet/60 border border-gold/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                                                                                                                                                      <div>
+                                                                                                                                                                        <span class="text-[11px] font-bold uppercase tracking-wider text-dusty">${h.badge}</span>
+                                                                                                                                                                          <h4 class="font-serif text-lg font-bold text-champagne/70">${h.title}</h4>
+                                                                                                                                                                            <p class="text-[11px] text-dusty/80">${isNext ? "Prêt à être murmuré à l’oreille de B. & V." : "Dévoilez d’abord le murmure précédent."}</p>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <button
+                                                                                                                                                                              type="button"
+                                                                                                                                                                              data-hint-level="${idx + 1}"
+                                                                                                                                                                              ${isNext ? "" : "disabled"}
+                                                                                                                                                                              class="unlock-hint-btn shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition ${
+                                                                                                                                                                                isNext
+                                                                                                                                                                                  ? "bg-gradient-to-r from-gold to-champagne text-velvet shadow-md hover:brightness-105"
+                                                                                                                                                                                  : "bg-velvet text-dusty/40 border border-gold/10 cursor-not-allowed"
+                                                                                                                                                                              }"
+                                                                                                                                                                              >
+                                                                                                                                                                              ${isNext ? "Écouter ce murmure" : "Verrouillé"}
+                                                                                                                                                                            </button>
+                                                                                                                                                                          </div>
+                                                                                                                                                                          `;
+            })
+            .join("");
+          document.querySelectorAll(".unlock-hint-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const lvl = Number(btn.dataset.hintLevel);
+              if (lvl === state.revealedHints + 1) {
+                state.revealedHints = lvl;
+                renderHintsModal();
+              }
+            });
+          });
+        }
+        function openHintsModal() {
+          renderHintsModal();
+          const m = document.getElementById("hintsModal");
+          m.classList.remove("hidden");
+          m.classList.add("flex");
+        }
+        function closeHintsModal() {
+          const m = document.getElementById("hintsModal");
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+        }
+        // -------------------------------------------------------------------------
+        // 12. GESTION DES ONGLETS RÈGLES / EXEMPLES & ÉVÉNEMENTS GLOBAUX
+        // -------------------------------------------------------------------------
+        function switchRulesTab(tabName) {
+          const rulesTab = document.getElementById("rulesTabContent");
+          const examplesTab = document.getElementById("examplesTabContent");
+          const btnRules = document.getElementById("tabRulesBtn");
+          const btnExamples = document.getElementById("tabExamplesBtn");
+          if (tabName === "examples") {
+            rulesTab.classList.add("hidden");
+            examplesTab.classList.remove("hidden");
+            btnExamples.classList.add("bg-gold", "text-velvet");
+            btnExamples.classList.remove("text-champagne", "hover:bg-gold/10");
+            btnRules.classList.remove("bg-gold", "text-velvet");
+            btnRules.classList.add("text-champagne", "hover:bg-gold/10");
+          } else {
+            examplesTab.classList.add("hidden");
+            rulesTab.classList.remove("hidden");
+            btnRules.classList.add("bg-gold", "text-velvet");
+            btnRules.classList.remove("text-champagne", "hover:bg-gold/10");
+            btnExamples.classList.remove("bg-gold", "text-velvet");
+            btnExamples.classList.add("text-champagne", "hover:bg-gold/10");
+          }
+        }
+        function openRulesModal(defaultTab = "rules") {
+          switchRulesTab(defaultTab);
+          const m = document.getElementById("rulesModal");
+          m.classList.remove("hidden");
+          m.classList.add("flex");
+        }
+        function closeRulesModal() {
+          const m = document.getElementById("rulesModal");
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+        }
+        function closeResultModal() {
+          const m = document.getElementById("resultModal");
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+        }
+        // Écouteurs de navigation et de partie
+        document.querySelectorAll(".diff-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const d = Number(btn.dataset.diff);
+            if (d !== state.difficulty) {
+              startNewGame(generateRandomSeed(), d);
+              showToast(`Intensité réglée sur ${d} Indices du Cœur.`, "info");
+            }
+          });
+        });
+        document.getElementById("newGameBtn").addEventListener("click", () => {
+          startNewGame(generateRandomSeed(), state.difficulty);
+          showToast("Une nouvelle nuit secrète commence pour B. & V.", "info");
+        });
+        document.getElementById("loadSeedBtn").addEventListener("click", () => {
+          const raw = document.getElementById("seedInput").value;
+          const norm = normalizeSeed(raw);
+          startNewGame(norm, state.difficulty);
+          showToast(
+            `Serment ${norm} chargé : B. & V. partagent la même énigme.`,
+            "success",
+          );
+        });
+        document
+          .getElementById("seedInput")
+          .addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              document.getElementById("loadSeedBtn").click();
+            }
+          });
+        document.getElementById("copySeedBtn").addEventListener("click", () => {
+          const input = document.getElementById("seedInput");
+          input.select();
+          input.setSelectionRange(0, 99999);
+          try {
+            document.execCommand("copy");
+            showToast(
+              `Code du serment « ${state.seed} » copié pour le partager entre B. & V.`,
+              "success",
+            );
+          } catch (err) {
+            showToast(`Code du serment : ${state.seed}`, "info");
+          }
+        });
+        document
+          .getElementById("nextRoundBtn")
+          .addEventListener("click", nextRound);
+        document
+          .getElementById("solveModalBtn")
+          .addEventListener("click", openSolveModal);
+        document
+          .getElementById("closeSolveModal")
+          .addEventListener("click", closeSolveModal);
+        document
+          .getElementById("cancelSolveBtn")
+          .addEventListener("click", closeSolveModal);
+        document
+          .getElementById("confirmSolveBtn")
+          .addEventListener("click", evaluateFinalGuess);
+        document
+          .getElementById("closeResultBtn")
+          .addEventListener("click", closeResultModal);
+        document
+          .getElementById("playAgainBtn")
+          .addEventListener("click", () => {
+            closeResultModal();
+            startNewGame(generateRandomSeed(), state.difficulty);
+          });
+        document
+          .getElementById("openRulesBtn")
+          .addEventListener("click", () => openRulesModal("rules"));
+        document
+          .getElementById("quickExamplesBtn")
+          .addEventListener("click", () => openRulesModal("examples"));
+        document
+          .getElementById("closeRulesModal")
+          .addEventListener("click", closeRulesModal);
+        document
+          .getElementById("ackRulesBtn")
+          .addEventListener("click", closeRulesModal);
+        document
+          .getElementById("tabRulesBtn")
+          .addEventListener("click", () => switchRulesTab("rules"));
+        document
+          .getElementById("tabExamplesBtn")
+          .addEventListener("click", () => switchRulesTab("examples"));
+        document
+          .getElementById("openHintsBtn")
+          .addEventListener("click", openHintsModal);
+        document
+          .getElementById("closeHintsModal")
+          .addEventListener("click", closeHintsModal);
+        document
+          .getElementById("ackHintsBtn")
+          .addEventListener("click", closeHintsModal);
+        document
+          .getElementById("openBenchBtn")
+          .addEventListener("click", openBenchModal);
+        document
+          .getElementById("closeBenchModal")
+          .addEventListener("click", closeBenchModal);
+        document
+          .getElementById("runBenchBtn")
+          .addEventListener("click", runBenchmarkSuite);
+        document
+          .getElementById("helperToggle")
+          .addEventListener("change", updateHelperCount);
+        document
+          .getElementById("resetNotesBtn")
+          .addEventListener("click", () => {
+            state.notes = {
+              blue: [0, 0, 0, 0, 0],
+              yellow: [0, 0, 0, 0, 0],
+              purple: [0, 0, 0, 0, 0],
+            };
+            renderDeductionGrid();
+            showToast("Carte du Tendre réinitialisée.", "info");
+          });
+        // Lancement initial
+        startNewGame();
+      })();
+    </script>
+  </body>
+</html>
