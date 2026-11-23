@@ -22,7 +22,7 @@ L’étreinte secrète est une combinaison de trois nuances, chacune numérotée
 |---|---|---|---|
 | 1 | Café tamisé | Timide | Souvenirs d’enfance |
 | 2 | Pluie tiède | Taquin | Rêves fous |
-| 3 | Bougies & vin | Passionné | Un secret inavoué |
+| 3 | Bougies & musique | Passionné | Un secret inavoué |
 | 4 | Galerie déserte | Mystérieux | Le silence complice |
 | 5 | Toit sous les étoiles | Troublé | Leur avenir à deux |
 
