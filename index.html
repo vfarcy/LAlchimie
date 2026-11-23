@@ -8,11 +8,11 @@
     </title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts : Cormorant Garamond & Plus Jakarta Sans -->
+    <!-- Google Fonts : Cormorant Garamond & Inter -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600;1,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600;1,700&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
       rel="stylesheet"
     />
     <script>
@@ -20,27 +20,28 @@
         theme: {
           extend: {
             colors: {
-              velvet: "#12060c",
-              burgundy: "#1d0912",
-              boudoir: "#260d18",
-              gold: "#e6b87d",
-              champagne: "#f5d0a9",
-              crimson: "#d94e67",
-              blush: "#ff8fa3",
-              sapphire: "#4a76b8",
-              emeraldGlow: "#34d399",
-              rubyGlow: "#fb7185",
-              cream: "#f7efe6",
-              dusty: "#b89fa9",
+              velvet: "#fffdf9",
+              burgundy: "#fcf8f3",
+              boudoir: "#f9eee8",
+              gold: "#6b1d3a",
+              champagne: "#491126",
+              crimson: "#a8385d",
+              blush: "#9b3455",
+              sapphire: "#315c7c",
+              amberWarm: "#875416",
+              emeraldGlow: "#087458",
+              rubyGlow: "#b42345",
+              cream: "#2b1820",
+              dusty: "#6b555c",
             },
             fontFamily: {
               serif: ['"Cormorant Garamond"', "Georgia", "serif"],
-              sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+              sans: ['"Inter"', "system-ui", "sans-serif"],
             },
             boxShadow: {
               sensual:
-                "0 14px 40px -10px rgba(0, 0, 0, 0.75), 0 0 24px -6px rgba(230, 184, 125, 0.14)",
-              candle: "0 0 32px rgba(230, 184, 125, 0.22)",
+                "0 12px 32px -12px rgba(73, 17, 38, 0.14), 0 2px 6px rgba(107, 29, 58, 0.05)",
+              candle: "0 4px 12px rgba(107, 29, 58, 0.18)",
             },
           },
         },
@@ -48,53 +49,44 @@
     </script>
     <style>
       body {
-        background-color: #12060c;
-        color: #f7efe6;
-        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: #fcf8f3;
+        color: #2b1820;
+        font-family: "Inter", sans-serif;
         background-image:
           radial-gradient(
-            circle at 12% 14%,
-            rgba(217, 78, 103, 0.16) 0%,
+            circle at 12% 15%,
+            rgba(244, 194, 194, 0.25) 0%,
             transparent 45%
           ),
           radial-gradient(
-            circle at 86% 18%,
-            rgba(230, 184, 125, 0.14) 0%,
+            circle at 88% 82%,
+            rgba(212, 175, 55, 0.14) 0%,
             transparent 48%
           ),
-          radial-gradient(
-            circle at 50% 88%,
-            rgba(74, 118, 184, 0.14) 0%,
-            transparent 52%
-          ),
-          linear-gradient(165deg, #12060c 0%, #1d0912 50%, #15070e 100%);
+          radial-gradient(rgba(107, 29, 58, 0.06) 1px, transparent 1px);
+        background-size: 100% 100%, 100% 100%, 24px 24px;
         min-height: 100vh;
       }
-      /* Texture velours & papier grainé sombre */
       .velvet-card {
-        background: linear-gradient(
-          155deg,
-          rgba(38, 13, 24, 0.92) 0%,
-          rgba(24, 8, 16, 0.96) 100%
-        );
-        border: 1px solid rgba(230, 184, 125, 0.22);
-        backdrop-filter: blur(12px);
+        background: linear-gradient(180deg, #fffefb 0%, #fcf6ef 100%);
+        border: 1px solid rgba(198, 125, 99, 0.35);
       }
       .velvet-card-subtle {
-        background: rgba(29, 9, 18, 0.75);
-        border: 1px solid rgba(230, 184, 125, 0.16);
+        background: rgba(255, 253, 249, 0.9);
+        border: 1px solid rgba(198, 125, 99, 0.3);
       }
       /* Simulation réaliste des cartes perforées superposées */
       .punch-veil {
         background: linear-gradient(
           135deg,
-          rgba(255, 255, 255, 0.05),
-          rgba(0, 0, 0, 0.35)
+          #f8eddd,
+          #fffdfa 48%,
+          #f5e8d9
         );
-        border: 1px solid rgba(230, 184, 125, 0.28);
+        border: 1px solid rgba(198, 125, 99, 0.55);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          0 12px 28px rgba(0, 0, 0, 0.65);
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 14px 28px -20px rgba(73, 17, 38, 0.5);
       }
       .punch-hole {
         transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -143,9 +135,9 @@
         transform: scale(1.08);
       }
       .punch-hole.closed {
-        background-color: rgba(12, 4, 8, 0.72);
-        border: 1px solid rgba(230, 184, 125, 0.14);
-        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7);
+        background-color: #e8d9d4;
+        border: 1px solid rgba(107, 29, 58, 0.18);
+        box-shadow: inset 0 2px 4px rgba(73, 17, 38, 0.1);
       }
       /* États de la grille de déduction intime */
       .note-cell {
@@ -161,9 +153,9 @@
       }
       .note-eliminated {
         position: relative;
-        color: rgba(184, 159, 169, 0.38);
-        background-color: rgba(18, 6, 12, 0.65);
-        border-color: rgba(217, 78, 103, 0.22);
+        color: #856d74;
+        background-color: #f2e7e5;
+        border-color: rgba(168, 56, 93, 0.3);
       }
       .note-eliminated::after {
         content: "";
@@ -172,22 +164,22 @@
         right: 16%;
         top: 50%;
         height: 2px;
-        background: linear-gradient(90deg, transparent, #d94e67, transparent);
+        background: linear-gradient(90deg, transparent, #a8385d, transparent);
         transform: rotate(-20deg);
         border-radius: 2px;
       }
       .note-confirmed {
         background: linear-gradient(
           145deg,
-          rgba(230, 184, 125, 0.24),
-          rgba(217, 78, 103, 0.18)
+          rgba(198, 125, 99, 0.2),
+          rgba(168, 56, 93, 0.12)
         );
-        border-color: #e6b87d;
-        color: #f5d0a9;
+        border-color: #a8385d;
+        color: #491126;
         font-weight: 700;
         box-shadow:
-          0 0 14px rgba(230, 184, 125, 0.35),
-          inset 0 0 0 1px rgba(245, 208, 169, 0.5);
+          0 0 10px rgba(168, 56, 93, 0.15),
+          inset 0 0 0 1px rgba(168, 56, 93, 0.2);
       }
       /* Halo respirant subtil */
       @keyframes candlePulse {
@@ -204,20 +196,19 @@
       .candle-halo {
         animation: candlePulse 5s ease-in-out infinite;
       }
-      /* Scrollbar velours */
       ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #12060c;
+        background: #fcf8f3;
       }
       ::-webkit-scrollbar-thumb {
-        background: rgba(230, 184, 125, 0.3);
+        background: rgba(107, 29, 58, 0.3);
         border-radius: 9999px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: rgba(230, 184, 125, 0.55);
+        background: rgba(107, 29, 58, 0.55);
       }
     </style>
   </head>
@@ -232,26 +223,15 @@
         <!-- Identité B. & V. -->
         <div class="flex items-center gap-3.5">
           <div
-            class="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-boudoir to-velvet border border-gold/40 flex items-center justify-center shadow-candle"
+            class="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-gold to-crimson text-velvet border border-gold/40 flex items-center justify-center shadow-candle"
           >
             <span
               class="candle-halo absolute inset-0 rounded-2xl bg-gold/10 pointer-events-none"
             >
             </span>
-            <svg
-              class="w-5 h-5 text-gold"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              viewbox="0 0 24 24"
-            >
-              <path
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <circle cx="12" cy="10" fill="currentColor" r="2.2"></circle>
-            </svg>
+            <span class="font-serif italic font-bold text-lg tracking-tight">
+              B&amp;V
+            </span>
           </div>
           <div>
             <div class="flex items-center gap-2.5">
@@ -589,7 +569,7 @@
             >
               <div class="flex items-center justify-between">
                 <span
-                  class="text-xs font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5"
+                  class="text-xs font-bold uppercase tracking-wider text-sapphire flex items-center gap-1.5"
                 >
                   <span
                     class="w-2.5 h-2.5 rounded-full bg-sapphire inline-block shadow-[0_0_8px_#4a76b8]"
@@ -598,7 +578,7 @@
                   L&rsquo;Atmosph&egrave;re
                 </span>
                 <span
-                  class="text-xs font-serif italic font-semibold text-blue-200"
+                  class="text-xs font-serif italic font-semibold text-sapphire"
                   id="blueLabelBadge"
                 >
                   3. Bougies &amp; vin
@@ -606,7 +586,7 @@
               </div>
               <div class="grid grid-cols-5 gap-1.5" id="blueSelector"></div>
               <p
-                class="text-[11px] text-blue-200/85 font-medium truncate"
+                class="text-[11px] text-sapphire/85 font-medium truncate"
                 id="blueDesc"
               >
                 Bougies &amp; vin
@@ -614,14 +594,14 @@
             </div>
             <!-- AMBRE : L'Élan entre B. & V. -->
             <div
-              class="rounded-xl p-3.5 bg-gold/10 border border-gold/35 space-y-2.5"
+              class="rounded-xl p-3.5 bg-amberWarm/10 border border-amberWarm/35 space-y-2.5"
             >
               <div class="flex items-center justify-between">
                 <span
-                  class="text-xs font-bold uppercase tracking-wider text-gold flex items-center gap-1.5"
+                  class="text-xs font-bold uppercase tracking-wider text-amberWarm flex items-center gap-1.5"
                 >
                   <span
-                    class="w-2.5 h-2.5 rounded-full bg-gold inline-block shadow-[0_0_8px_#e6b87d]"
+                    class="w-2.5 h-2.5 rounded-full bg-amberWarm inline-block"
                   >
                   </span>
                   L&rsquo;&Eacute;lan B. &amp; V.
@@ -845,7 +825,7 @@
               class="px-3.5 pb-3.5 pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-gold/15 text-[11px]"
             >
               <div>
-                <div class="font-bold text-blue-300 mb-1">
+                <div class="font-bold text-sapphire mb-1">
                   Atmosph&egrave;re (Bleu)
                 </div>
                 <ol class="list-decimal list-inside space-y-0.5 text-dusty">
@@ -857,7 +837,7 @@
                 </ol>
               </div>
               <div>
-                <div class="font-bold text-gold mb-1">
+                <div class="font-bold text-amberWarm mb-1">
                   &Eacute;lan B. &amp; V. (Ambre)
                 </div>
                 <ol class="list-decimal list-inside space-y-0.5 text-dusty">
@@ -962,7 +942,7 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div class="space-y-1.5">
-            <label class="block text-xs font-bold text-blue-300 text-center">
+            <label class="block text-xs font-bold text-sapphire text-center">
               Atmosph&egrave;re (Bleu)
             </label>
             <select
@@ -977,7 +957,7 @@
             </select>
           </div>
           <div class="space-y-1.5">
-            <label class="block text-xs font-bold text-gold text-center">
+            <label class="block text-xs font-bold text-amberWarm text-center">
               &Eacute;lan B. &amp; V. (Ambre)
             </label>
             <select
@@ -1171,7 +1151,7 @@
               <li
                 class="p-2.5 rounded-xl bg-sapphire/15 border border-sapphire/35"
               >
-                <strong class="text-blue-300 block mb-0.5">
+                <strong class="text-sapphire block mb-0.5">
                   Atmosph&egrave;re (Saphir)
                 </strong>
                 <span class="text-dusty text-[11px]">
@@ -1180,8 +1160,8 @@
                   &bull; 5. Toit sous les &eacute;toiles
                 </span>
               </li>
-              <li class="p-2.5 rounded-xl bg-gold/15 border border-gold/35">
-                <strong class="text-gold block mb-0.5">
+              <li class="p-2.5 rounded-xl bg-amberWarm/15 border border-amberWarm/35">
+                <strong class="text-amberWarm block mb-0.5">
                   &Eacute;lan B. &amp; V. (Ambre)
                 </strong>
                 <span class="text-dusty text-[11px]">
@@ -1443,7 +1423,7 @@
               </div>
               <div class="flex flex-wrap items-center gap-3 text-[11px]">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-blue-300 font-bold">
+                  <span class="text-sapphire font-bold">
                     Atmosph&egrave;re :
                   </span>
                   <span
@@ -1772,9 +1752,9 @@
             key: "blue",
             name: "L’Atmosphère",
             short: "Atmosphère",
-            colorHex: "#4a76b8",
+            colorHex: "#315c7c",
             bgClass: "bg-sapphire",
-            textClass: "text-blue-300",
+            textClass: "text-sapphire",
             borderClass: "border-sapphire",
             values: {
               1: "Café tamisé",
@@ -1788,10 +1768,10 @@
             key: "yellow",
             name: "L’Élan B. & V.",
             short: "Élan B. & V.",
-            colorHex: "#e6b87d",
-            bgClass: "bg-gold",
-            textClass: "text-gold",
-            borderClass: "border-gold",
+            colorHex: "#875416",
+            bgClass: "bg-amberWarm",
+            textClass: "text-amberWarm",
+            borderClass: "border-amberWarm",
             values: {
               1: "Timide (frôlement)",
               2: "Taquin (sourire complice)",
@@ -1804,7 +1784,7 @@
             key: "purple",
             name: "Les Confidences",
             short: "Confidences",
-            colorHex: "#d94e67",
+            colorHex: "#a8385d",
             bgClass: "bg-crimson",
             textClass: "text-blush",
             borderClass: "border-crimson",
@@ -2742,7 +2722,7 @@
                                                                                                                                       <div class="flex items-center justify-between gap-2">
                                                                                                                                         <span class="text-[11px] font-bold uppercase tracking-wider text-gold">Nuit ${entry.round}</span>
                                                                                                                                           <div class="flex items-center gap-1 font-mono text-xs font-bold">
-                                                                                                                                            <span class="px-1.5 py-0.5 rounded bg-sapphire/25 text-blue-200 border border-sapphire/35">${b}</span>
+                                                                                                                                            <span class="px-1.5 py-0.5 rounded bg-sapphire/25 text-sapphire border border-sapphire/35">${b}</span>
                                                                                                                                               <span class="px-1.5 py-0.5 rounded bg-gold/25 text-champagne border border-gold/35">${y}</span>
                                                                                                                                                 <span class="px-1.5 py-0.5 rounded bg-crimson/25 text-blush border border-crimson/35">${p}</span>
                                                                                                                                                 </div>

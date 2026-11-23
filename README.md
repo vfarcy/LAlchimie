@@ -79,7 +79,7 @@ La graine n’est pas un mécanisme de sécurité : le jeu et son secret sont ca
 
 - Application statique, sans serveur applicatif ni dépendances installées.
 - HTML, styles et JavaScript sont réunis dans `index.html`.
-- Tailwind CSS et les polices Cormorant Garamond / Plus Jakarta Sans sont chargés depuis des CDN ; une connexion Internet est donc nécessaire pour obtenir le style complet.
+- Tailwind CSS et les polices Cormorant Garamond / Inter sont chargés depuis des CDN ; une connexion Internet est donc nécessaire pour obtenir le style complet.
 - L’état de la partie, les annotations et les notes libres ne sont pas sauvegardés : recharger la page démarre une nouvelle partie.
 
 ## Déploiement
