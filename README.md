@@ -84,7 +84,9 @@ La graine n’est pas un mécanisme de sécurité : le jeu et son secret sont ca
 
 ## Déploiement
 
-GitHub Pages publie automatiquement la racine de la branche `main`. Chaque modification poussée sur cette branche déclenche une nouvelle publication, sans étape de compilation.
+Le workflow GitHub Actions publie automatiquement l’application sur GitHub Pages à chaque modification poussée sur `main`. La source de GitHub Pages doit être réglée sur **GitHub Actions**. Le workflow peut aussi être lancé manuellement depuis l’onglet Actions.
+
+Le bas de page affiche l’heure UTC de préparation du déploiement et le numéro d’exécution du workflow, suivi du numéro de tentative. En local, ces informations ne sont pas disponibles. Le fichier source reste inchangé : les métadonnées sont insérées uniquement dans la copie publiée.
 
 ## Audit et vérification
 
