@@ -59,12 +59,12 @@ Une réponse émeraude sur une carte ne suffit pas à prouver que la rencontre e
 
 ### Garder la trace des intuitions
 
-Sur la **Carte du Tendre**, cliquez sur une nuance pour la marquer comme éliminée, cliquez à nouveau pour la confirmer, puis une troisième fois pour la remettre à l’état neutre. Ces marques sont vos notes personnelles : le compteur d’accords encore possibles se fonde sur elles, et non sur les réponses du Journal.
+Sur la **Carte du Tendre**, cliquez sur une nuance pour la marquer comme éliminée, cliquez à nouveau pour la confirmer, puis une troisième fois pour la remettre à l’état neutre. Ces marques sont vos notes personnelles : le compteur d’accords encore possibles se fonde sur elles, et non sur les réponses du Journal. Pour chaque dimension, si une ou plusieurs nuances sont confirmées, seules celles-ci sont comptées ; sinon, toutes les nuances non éliminées sont comptées. La case **Murmure** de la Carte permet d’afficher ou de masquer ce compteur.
 
-Le bouton **Murmure** propose trois niveaux d’aide progressive, sans consulter le secret et sans coûter de soupir :
+Le bouton **Murmure (Indices)**, distinct de la case de la Carte, propose trois niveaux d’aide à dévoiler dans l’ordre, sans consulter le secret et sans coûter de soupir :
 
 1. **Le Souffle** compte les combinaisons compatibles avec les réponses du Journal et explique les promesses encore possibles pour une carte sondée.
-2. **La Piste** propose un sondage et indique comment ses deux réponses possibles partageraient les pistes, sans prédire la réponse.
+2. **La Piste** propose, lorsque c’est possible, un sondage et indique comment ses deux réponses possibles partageraient les pistes, sans prédire la réponse. Elle peut aussi signaler qu’une seule combinaison reste ou qu’aucun sondage ne départage davantage les pistes.
 3. **La Clé** explique une nuance à écarter lorsque les réponses le permettent ; sinon, elle invite à poursuivre les sondages.
 
 Ces déductions utilisent les promesses affichées et les réponses reçues, sans appliquer les Serments d’Or ni restreindre les pistes selon les marques de la Carte du Tendre. La Clé privilégie néanmoins une nuance qui n’a pas déjà été voilée.
@@ -77,7 +77,7 @@ Vous pouvez jouer seul, réfléchir ensemble sur le même écran ou comparer vos
 
 ## Partager une partie
 
-Le code « Serment » sert de graine déterministe : deux personnes qui chargent le même code et la même intensité obtiennent la même énigme. Copiez le code avec le bouton prévu à cet effet, puis chargez-le sur l’autre appareil.
+Le code « Serment » sert de graine déterministe : deux personnes qui chargent le même code et la même intensité obtiennent la même énigme. Copiez le code avec le bouton prévu à cet effet. Sur l’autre appareil, choisissez d’abord la même intensité, puis saisissez le code et cliquez sur **OK**. Changer d’intensité démarre une nouvelle énigme ; charger un code recommence la partie et efface les notes et le Journal en cours.
 
 La graine n’est pas un mécanisme de sécurité : le jeu et son secret sont calculés dans le navigateur. Elle permet de rejouer ou partager une énigme, pas d’empêcher la triche.
 
