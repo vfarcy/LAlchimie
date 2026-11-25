@@ -1,0 +1,10 @@
+name = "alchimie"
+version = "0.1.0"
+defaultTargets = ["alchimie"]
+
+[[lean_lib]]
+name = "Alchimie"
+
+[[lean_exe]]
+name = "alchimie"
+root = "Main"

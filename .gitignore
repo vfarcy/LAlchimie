@@ -1,0 +1,31 @@
+# Lean build artifacts
+alchimie/.lake/
+alchimie/build/
+*.olean
+
+# Obsolete Lean demo files (keep only demo_final.lean and demo_detaille.lean)
+demo.lean
+demo_simple.lean
+alchimie.lean
+alchimie_compute.lean
+
+# Node / npm
+node_modules/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+
+# Misc
+.env
+.env.local

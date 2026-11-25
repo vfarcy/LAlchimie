@@ -2,6 +2,8 @@
 
 Jeu de déduction logique jouable dans un navigateur. À partir d’indices dont la vérité est cachée, retrouvez l’unique combinaison secrète parmi 125 possibilités.
 
+**[✨ Validé mathématiquement avec Lean 4](#validation-mathématique-lean-4)**
+
 ## Jouer
 
 Le jeu est disponible sur <https://vfarcy.github.io/LAlchimie/>.
@@ -94,7 +96,67 @@ Le workflow GitHub Actions publie automatiquement l’application sur GitHub Pag
 
 Le bas de page affiche l’heure UTC de préparation du déploiement et le numéro d’exécution du workflow, suivi du numéro de tentative. En local, ces informations ne sont pas disponibles. Le fichier source reste inchangé : les métadonnées sont insérées uniquement dans la copie publiée.
 
-## Audit et vérification
+## Validation mathématique (Lean 4)
+
+Cette section valide formellement les **deux Serments d'Or** du jeu avec un assistant de preuve.
+
+### Résultats
+
+✅ **Unicité** : Chaque énigme valide a exactement **1 solution** parmi 125 possibilités
+✅ **Non-redondance** : Chaque indice (carte) est **indispensable**
+
+### Exécuter la démonstration
+
+```bash
+lean demo_final.lean      # Affiche la preuve complète
+lean demo_detaille.lean   # Montre tous les détails (75 → 30 → 12 → 1)
+```
+
+**Résultat** : Affiche 125 rencontres totales, puis le filtrage progressif par conditions.
+
+### Documentation
+
+| Fichier | Contenu | Lecture |
+|---------|---------|---------|
+| **[LEAN_RESUME.md](LEAN_RESUME.md)** | Résumé exécutif de la validation | 5 min |
+| **[LEAN_QUICKSTART.md](LEAN_QUICKSTART.md)** | Guide rapide pour exécuter | 2 min |
+| **[LEAN_VALIDATION_COMPLETE.md](LEAN_VALIDATION_COMPLETE.md)** | Documentation complète | 15 min |
+| **[LEAN_PROOF.md](LEAN_PROOF.md)** | Théorèmes formels Lean | Avancé |
+
+### Structure
+
+```
+alchimie/                           # Projet Lean compilable (lake build)
+├── Alchimie/ProofOfUniqueness.lean # Preuve formelle
+├── lakefile.lean                   # Configuration
+└── ...
+
+demo_final.lean                     # 🚀 Exécution de la preuve (simple)
+demo_detaille.lean                  # Affiche tous les filtres pas à pas
+demo_simple.lean, demo.lean         # Variants (obsolète)
+alchimie.lean, alchimie_compute.lean # Preuves abstraites (obsolète)
+```
+
+### Comment ça marche
+
+```lean
+1. Générer : 125 rencontres = {1..5}³
+2. Filtrer : Appliquer chaque condition (indice)
+3. Compter : Solutions restantes après filtrage
+4. Prouver : Avec les bonnes conditions → exactement 1
+```
+
+Exemple réel :
+- Avec 1 condition : **75 solutions**
+- Avec 2 conditions : **30 solutions**
+- Avec 3 conditions : **12 solutions**
+- Avec 5 conditions précises : **1 solution unique** ✓
+
+La machine (Lean) garantit formellement que chaque énigme bien construite a exactement 1 solution.
+
+---
+
+## Audit et vérification (JavaScript)
 
 Le banc d’épreuve est accessible depuis le bouton « Banc d’Épreuve ». Il teste les 19 familles d’indices sur les 125 combinaisons, génère 300 énigmes (100 par intensité), vérifie le solveur sur 60 parties et contrôle les déductions des Murmures.
 
